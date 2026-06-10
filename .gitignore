@@ -1,0 +1,31 @@
+# Ghost runtime
+node_modules/
+.ghost/
+content/data/
+content/logs/
+content/images/
+content/files/
+content/themes/casper/
+*.db
+*.sqlite3
+
+# Ghost config (contains DB paths and mail credentials)
+config.development.json
+config.production.json
+config.*.json
+
+# Environment
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Build artifacts
+dist/
+build/
