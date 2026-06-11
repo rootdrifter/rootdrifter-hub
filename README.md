@@ -69,6 +69,33 @@ theme/
     screen.css            # full design system + accessibility + print
 ```
 
+## Tag taxonomy
+
+The full machine-readable taxonomy is `content/tags.json`. Two tiers:
+
+**Primary tags** define the content pillars and are the ones surfaced in navigation and on cards. Every
+post must carry **exactly one** primary tag as its *primary* tag (the first one listed in the post
+front-matter), which drives the card accent and the "Related Portfolio" cross-link in `post.hbs`:
+
+| Primary tag | Use for |
+|-------------|---------|
+| `ctf-writeup` | TryHackMe / HackTheBox writeups |
+| `pentest-methodology` | Technique and process breakdowns |
+| `osint-recon` | Reconnaissance and OSINT tooling/technique |
+| `security-notes` | General concepts, tools, reference |
+| `sec-plus` | SY0-701 study notes |
+| `detection-engineering` | Blue-team detection content from the Wazuh lab |
+
+**Secondary tags** are meta and stack freely on top of the primary: platform (`tryhackme`,
+`hackthebox`), difficulty (`easy`/`medium`/`hard`), category (`linux`/`windows`/`web`/`network`,
+`tool-spotlight`, `wazuh`/`siem`/`blue-team`). They exist for filtering, not for defining a pillar.
+
+**Rule of thumb:** one primary tag (the pillar), then as many secondary tags as accurately describe the
+post. A CTF writeup of an easy Linux THM box is `ctf-writeup` (primary) + `tryhackme`, `easy`, `linux`.
+
+Draft posts live in `content/posts/` as front-matter Markdown; the publishing cadence is in
+`content/CONTENT_CALENDAR.md`.
+
 ## Deployment notes
 
 **Task 10 — VPS provisioning is pending.** The theme is built and validated; going live needs a host

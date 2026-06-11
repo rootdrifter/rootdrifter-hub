@@ -1,0 +1,56 @@
+{
+  "_comment": "Tag taxonomy for rootdrifter.io. Primary tags define content pillars and are surfaced in navigation/filtering; secondary tags are meta (platform/difficulty/category) used for cross-cutting filtering. Slugs are kebab-case to match Ghost's tag slugs. Usage guidelines: see README.md 'Tag taxonomy'.",
+  "primary": [
+    {
+      "slug": "ctf-writeup",
+      "name": "CTF Writeup",
+      "description": "Capture The Flag writeups from TryHackMe and HackTheBox — methodology-led, evidence-backed.",
+      "accent": "accent"
+    },
+    {
+      "slug": "pentest-methodology",
+      "name": "Pentest Methodology",
+      "description": "Penetration testing methodology and technique breakdowns — repeatable process over one-off tricks.",
+      "accent": "accent"
+    },
+    {
+      "slug": "osint-recon",
+      "name": "OSINT & Recon",
+      "description": "OSINT and reconnaissance techniques and tooling — passive footprinting through active enumeration.",
+      "accent": "accent2"
+    },
+    {
+      "slug": "security-notes",
+      "name": "Security Notes",
+      "description": "General security concepts, tools, and reference material kept for repeated use.",
+      "accent": "accent2"
+    },
+    {
+      "slug": "sec-plus",
+      "name": "Security+ (SY0-701)",
+      "description": "CompTIA Security+ SY0-701 study notes and exam prep, mapped to the five domains.",
+      "accent": "green"
+    },
+    {
+      "slug": "detection-engineering",
+      "name": "Detection Engineering",
+      "description": "Blue-team detection content from the Wazuh SIEM home lab — hypotheses, rules, validation.",
+      "accent": "green"
+    }
+  ],
+  "secondary": [
+    { "slug": "tryhackme",      "name": "TryHackMe",   "type": "platform",   "description": "Posts based on TryHackMe rooms." },
+    { "slug": "hackthebox",     "name": "HackTheBox",  "type": "platform",   "description": "Posts based on HackTheBox machines." },
+    { "slug": "easy",           "name": "Easy",        "type": "difficulty", "description": "Beginner-friendly difficulty." },
+    { "slug": "medium",         "name": "Medium",      "type": "difficulty", "description": "Intermediate difficulty." },
+    { "slug": "hard",           "name": "Hard",        "type": "difficulty", "description": "Advanced difficulty." },
+    { "slug": "linux",          "name": "Linux",       "type": "category",   "description": "Linux target or topic." },
+    { "slug": "windows",        "name": "Windows",     "type": "category",   "description": "Windows target or topic." },
+    { "slug": "web",            "name": "Web",         "type": "category",   "description": "Web application target or topic." },
+    { "slug": "network",        "name": "Network",     "type": "category",   "description": "Network-layer target or topic." },
+    { "slug": "tool-spotlight", "name": "Tool Spotlight", "type": "category", "description": "A post focused on a single tool, in depth." },
+    { "slug": "wazuh",          "name": "Wazuh",       "type": "category",   "description": "Wazuh SIEM-specific detection content." },
+    { "slug": "siem",           "name": "SIEM",        "type": "category",   "description": "SIEM operations and detection-engineering topics." },
+    { "slug": "blue-team",      "name": "Blue Team",   "type": "category",   "description": "Defensive security perspective." }
+  ]
+}
