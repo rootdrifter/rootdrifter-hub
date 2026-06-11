@@ -49,16 +49,21 @@ Sample content for visual testing is in `sample-content/` — import `ghost-impo
 
 ## Theme structure
 
+`routes.yaml` (repo root → `content/settings/routes.yaml`) defines: home + `/subscribe/`,
+the `/portfolio/` index + six `/portfolio/<project>/` pages, the `/blog/` collection, and the tag
+taxonomy. Static pages (About, Contact) serve implicitly at `/{slug}/`.
+
 ```
 theme/
-  package.json            # ghost-theme manifest (engines, image sizes, card_assets)
-  routes.yaml             # -> content/settings/routes.yaml (home + /blog/ collection + tag taxonomy)
-  default.hbs             # base layout: nav, skip-link, scroll bar, footer, ghost_head/foot
+  package.json            # ghost-theme manifest (engines, image sizes, card_assets, custom settings)
+  default.hbs             # base layout: <title>{{meta_title}}</title>, nav, skip-link, scroll bar, footer, ghost_head/foot
   index.hbs               # homepage ({{#is "home"}}) + /blog/ listing ({{else}})
-  post.hbs                # single post (reading view + subscribe)
+  post.hbs                # single post (teaser gate + TOC + related + subscribe)
   page.hbs                # static pages (About, Contact)
+  portfolio-index.hbs     # /portfolio/ — six-project card grid
+  portfolio-project.hbs   # /portfolio/<project>/ — migrated spec page + per-slug component
   tag.hbs                 # tag archive
-  error.hbs              # on-brand 404 / error
+  error.hbs               # on-brand 404 / error
   partials/
     navigation.hbs        # fixed top nav (PORTFOLIO / BLOG / ABOUT / CONTACT / GITHUB)
     footer.hbs            # site footer + nav strip
@@ -67,6 +72,9 @@ theme/
   assets/css/
     tokens.css            # design tokens (palette parity with the static site)
     screen.css            # full design system + accessibility + print
+  assets/js/
+    toc.js                # post table-of-contents (3+ headings, non-teaser)
+    <project>-*.js         # six self-mounting portfolio components (checklist/matrix/timeline/chart/stepper/radar)
 ```
 
 ## Tag taxonomy
