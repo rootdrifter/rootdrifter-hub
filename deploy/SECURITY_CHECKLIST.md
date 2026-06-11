@@ -47,8 +47,9 @@ Run every item after the VPS goes live (Stage 1), before announcing the domain. 
 
 ## Privacy / brand integrity
 
-- [ ] Full-site privacy scan on the live domain: no daemon codenames, no `passmail`, no
-      `rootdrift` without "er", no key material. (Re-run the standing scan against fetched HTML.)
+- [ ] Full-site privacy scan on the live domain — re-run the standing denylist scan against the
+      fetched HTML: no private codenames, no mail-provider handle, no malformed org handle (the
+      "er"-less form that 404s), no key material.
 - [ ] Accuracy invariants intact on the live portfolio pages (oracle 93.97/99.11 not swapped;
       mirage 88,647/ICC 0.98; spectre Apache 2.4.58/CWE-548; nullbyte nine profiles/Titan M2;
       ironveil Nitrokey 3A NFC).
