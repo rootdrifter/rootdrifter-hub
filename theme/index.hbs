@@ -3,6 +3,21 @@
 {{#is "home"}}
 {{!-- ====================== HOMEPAGE — practitioner's calling card ====================== --}}
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "rootdrifter",
+  "alternateName": "RootDrifter",
+  "description": "Security-cleared practitioner — offensive methodology, systems hardening, detection engineering.",
+  "url": "{{@site.url}}",
+  "sameAs": [
+    "https://github.com/rootdrifter",
+    "https://rootdrifter.github.io"
+  ]
+}
+</script>
+
 <header class="hero">
   <canvas id="rain" aria-hidden="true"></canvas>
   <div class="container">
@@ -46,21 +61,24 @@
   {{!-- PORTFOLIO STRIP --}}
   <div class="section-break"><h2>Portfolio</h2></div>
   <div class="pf-strip">
-    <div class="pf-item">
-      <span class="pf-kind">Defensive build</span>
-      <p>A hardened Linux workstation: full-disk encryption unlocked by a hardware security key, remote
-      pre-boot unlock, and all DNS filtered before it leaves the host.</p>
-    </div>
-    <div class="pf-item">
-      <span class="pf-kind">Offensive</span>
-      <p>A grey-box penetration test run end to end from a self-hardened server — enumeration to
-      privilege-escalation analysis, findings mapped to CWE, CIS, and ISO/IEC 27002.</p>
-    </div>
-    <div class="pf-item">
-      <span class="pf-kind">Research</span>
-      <p>Applied ML security: causal evaluation of social-engineering detection, and leakage-free image
-      classification under class imbalance — the discipline behind rare-attack-class detection.</p>
-    </div>
+    <a class="pf-item" href="https://rootdrifter.github.io/ironveil/" rel="noopener">
+      <span class="pf-kind">ironveil · defensive</span>
+      <p>Hardened Fedora workstation — LUKS2 full-disk encryption unlocked by a FIDO2 hardware key,
+      remote pre-boot SSH unlock, and all DNS filtered before it leaves the host.</p>
+      <span class="pf-metric">3-keyslot LUKS2 · Nitrokey 3A NFC · WireGuard egress</span>
+    </a>
+    <a class="pf-item" href="https://rootdrifter.github.io/spectre/" rel="noopener">
+      <span class="pf-kind">spectre · offensive</span>
+      <p>Grey-box pentest of an Apache 2.4.58 host from a CIS-L1 PostgreSQL server — PTES, findings
+      mapped to CWE / CIS / ISO&nbsp;27002, SHA-256 evidence chain.</p>
+      <span class="pf-metric">7 findings · primary CWE-548 · SHA-256 chain</span>
+    </a>
+    <a class="pf-item" href="https://rootdrifter.github.io/mirage/" rel="noopener">
+      <span class="pf-kind">mirage · research</span>
+      <p>Causal LLM evaluation over an 88,647-email phishing corpus — can frontier models reason about
+      social engineering, or only pattern-match it?</p>
+      <span class="pf-metric">88,647 emails · ICC 0.98 · GPT-4 94.2% DAG</span>
+    </a>
   </div>
   <p><a href="https://rootdrifter.github.io" rel="noopener"><strong>Full portfolio &#8594;&nbsp;&nbsp;rootdrifter.github.io</strong></a></p>
 

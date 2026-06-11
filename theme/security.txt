@@ -1,0 +1,7 @@
+# security.txt for rootdrifter.io — RFC 9116
+# Serve at https://rootdrifter.io/.well-known/security.txt
+# (deploy/nginx/rootdrifter.io.conf has the location block that aliases this file).
+Contact: mailto:hello@rootdrifter.io
+Preferred-Languages: en
+Canonical: https://rootdrifter.io/.well-known/security.txt
+Expires: 2027-06-11T00:00:00.000Z

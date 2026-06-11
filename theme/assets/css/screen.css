@@ -230,6 +230,9 @@ pre code { color: var(--green); background: none; padding: 0; font-size: inherit
   text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.4rem;
 }
 .pf-item p { font-size: 0.85rem; margin: 0; color: var(--text); }
+a.pf-item { text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: border-color 0.15s, transform 0.15s; }
+a.pf-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+.pf-item .pf-metric { font-family: var(--font-mono); font-size: 0.62rem; color: var(--muted); margin-top: 0.6rem; }
 
 /* ---------- active-work board ---------- */
 .ops-board { display: flex; flex-direction: column; gap: 0.5rem; margin: 1.25rem 0; }
