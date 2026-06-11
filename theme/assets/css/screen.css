@@ -158,6 +158,9 @@ p { margin-bottom: 1rem; }
 /* ---------- subscribe (members) ---------- */
 .subscribe { margin: 2rem 0; }
 .subscribe p { font-size: 0.92rem; margin-bottom: 0.8rem; }
+.subscribe .subscribe-head { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 0.3rem; }
+.subscribe .subscribe-sub { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.9rem; }
+.subscribe .subscribe-note { font-family: var(--font-mono); font-size: 0.62rem; color: var(--muted); margin: 0.7rem 0 0; }
 .subscribe-form { display: flex; gap: 0.6rem; flex-wrap: wrap; }
 .subscribe-input {
   flex: 1; min-width: 200px;
@@ -174,6 +177,10 @@ p { margin-bottom: 1rem; }
 .subscribe-btn:hover { background: var(--accent); color: var(--bg); }
 .subscribe-msg { font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); margin: 0.6rem 0 0; min-height: 1em; }
 .subscribe-msg[data-members-error] { color: var(--accent2); }
+/* Ghost Portal adds .success / .error to the form on submit; reveal the matching note (no page reload). */
+.subscribe-ok { display: none; color: var(--accent); }
+.subscribe-form.success ~ .subscribe-ok { display: block; }
+.subscribe-form.success ~ .subscribe-err { display: none; }
 
 /* ---------- code ---------- */
 :where(.post-content, .page-content) code {

@@ -11,6 +11,8 @@
 routes:
   /:
     template: index          # homepage renders index.hbs via its {{#is "home"}} branch
+  /subscribe/:
+    template: subscribe      # membership landing page (theme/subscribe.hbs)
 
 collections:
   /blog/:

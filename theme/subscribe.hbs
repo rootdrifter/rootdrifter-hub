@@ -1,0 +1,39 @@
+{{!< default}}
+{{!-- Subscription landing page. Routed via routes.yaml (/subscribe/ → template: subscribe).
+      The subscribe partial renders the live members form when membership is enabled. --}}
+<header class="hero">
+  <div class="container">
+    <div class="sys-label">// subscribe</div>
+    <h1>Stay in the loop</h1>
+    <div class="hero-sub">New writing by email — CTF writeups and repeatable security methodology. No noise.</div>
+  </div>
+</header>
+
+<div class="container narrow">
+
+  {{> subscribe}}
+
+  <div class="section-break"><h2>What subscribers get</h2></div>
+  <div class="pf-strip">
+    <div class="pf-item">
+      <span class="pf-kind">CTF writeups</span>
+      <p>TryHackMe and HackTheBox walkthroughs — enumeration to root, with the methodology made
+      explicit and repeatable, not just the commands.</p>
+    </div>
+    <div class="pf-item">
+      <span class="pf-kind">Methodology</span>
+      <p>The recon and assessment process behind the tooling: checklists, reasoning, and the
+      framework that makes results reproducible.</p>
+    </div>
+    <div class="pf-item">
+      <span class="pf-kind">Security notes</span>
+      <p>Security+ study distilled, tool spotlights, and detection-engineering notes from the
+      Wazuh SIEM lab build.</p>
+    </div>
+  </div>
+
+  <p>No spam, no fixed schedule — only when something worth reading goes up. Unsubscribe any time.
+  Prefer the source? Everything traces back to the
+  <a href="https://rootdrifter.github.io" rel="noopener">portfolio</a>.</p>
+
+</div>

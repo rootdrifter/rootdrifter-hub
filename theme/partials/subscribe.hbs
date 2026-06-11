@@ -1,15 +1,23 @@
-{{!-- Email subscription — only renders when Ghost membership is enabled.
-      Uses Ghost's native members form (data-members-form="subscribe"). --}}
+{{!-- Email subscription — membership conversion component.
+      Renders only when Ghost membership is enabled. Ghost Portal handles the form natively
+      (data-members-form="subscribe" → POST /members/api/send-magic-link/): on submit it toggles
+      .success / .error on the form element and fills [data-members-error] with any message. The CSS
+      in screen.css reveals the matching note, so the flow completes with no page reload and no custom
+      JS of our own. --}}
 {{#if @site.members_enabled}}
 <aside class="info-block subscribe" aria-label="Subscribe by email">
   <span class="blk-label">// subscribe</span>
-  <p>Get new posts by email. No noise — only when something worth reading goes up.</p>
+  <p class="subscribe-head">Get new posts by email</p>
+  <p class="subscribe-sub">CTF writeups, methodology breakdowns, and security notes — delivered when
+  something worth reading goes up. No noise, no schedule, unsubscribe any time.</p>
   <form data-members-form="subscribe" class="subscribe-form">
-    <label class="subscribe-label" for="subscribe-email" style="position:absolute;left:-9999px">Email address</label>
+    <label class="subscribe-label" for="subscribe-email">Email address</label>
     <input id="subscribe-email" data-members-email type="email" required autocomplete="email"
-           placeholder="you@example.com" class="subscribe-input">
-    <button type="submit" class="subscribe-btn">Subscribe</button>
+           placeholder="your@email.com" class="subscribe-input">
+    <button type="submit" class="subscribe-btn">Subscribe &#8594;</button>
   </form>
-  <p class="subscribe-msg" data-members-error></p>
+  <p class="subscribe-msg subscribe-ok" role="status">Confirmed — check your inbox for the magic link.</p>
+  <p class="subscribe-msg subscribe-err" data-members-error role="alert"></p>
+  <p class="subscribe-note">No spam. Unsubscribe any time.</p>
 </aside>
 {{/if}}

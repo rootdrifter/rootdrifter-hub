@@ -12,7 +12,7 @@ It does **not** contain the Ghost runtime, database, config, or any operational 
 
 | Property | rootdrifter.github.io | rootdrifter.io |
 |----------|-----------------------|----------------|
-| What | Static portfolio hub (project pages, clearance, skills) | Ghost CMS blog (CTF writeups, methodology) |
+| What | Static portfolio hub (project pages, clearance, skills) | Blog — CTF writeups, methodology |
 | Host | GitHub Pages | Ghost (self-hosted — VPS, pending) |
 | Source | `rootdrifter.github.io` repo | this repo (`rootdrifter-hub`) |
 | Design | canonical tokens + Share Tech Mono / Barlow | **the same tokens, same components** |
