@@ -1,0 +1,33 @@
+:root {
+  /* Core palette — matches rootdrifter.github.io exactly */
+  --bg:        #090d12;
+  --surface:   #0d1520;
+  --border:    #1a2a3a;
+  --accent:    #00e5ff;
+  --accent2:   #ff4081;
+  --warn:      #ffaa00;
+  --text:      #c8d8e8;
+  --muted:     #4a6a7a;
+  --code-bg:   #060a0f;
+  --green:     #00ff88;
+
+  /* Typography */
+  --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+  --font-body: 'Barlow', system-ui, sans-serif;
+
+  /* Spacing */
+  --space-xs:  0.25rem;
+  --space-sm:  0.5rem;
+  --space-md:  1rem;
+  --space-lg:  2rem;
+  --space-xl:  4rem;
+
+  /* Layout */
+  --max-width: 900px;
+  --nav-height: 48px;
+
+  /* Extended tokens (design-system parity with the static hub) */
+  --surface2:      #101a28;
+  --border-bright: #2a3f55;
+  --text-bright:   #e8f2fb;
+}

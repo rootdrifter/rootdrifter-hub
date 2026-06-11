@@ -1,0 +1,21 @@
+{{!< default}}
+<div class="container">
+
+  {{#tag}}
+  <div class="section-break"><h2>Tag &mdash; {{name}}</h2></div>
+  {{#if description}}<p>{{description}}</p>{{/if}}
+  {{/tag}}
+
+  {{#if posts}}
+    <div class="post-feed">
+      {{#foreach posts}}{{> post-card}}{{/foreach}}
+    </div>
+    {{pagination}}
+  {{else}}
+    <div class="info-block">
+      <span class="blk-label">// tag</span>
+      No posts with this tag yet.
+    </div>
+  {{/if}}
+
+</div>

@@ -1,0 +1,147 @@
+{{!< default}}
+
+{{#is "home"}}
+{{!-- ====================== HOMEPAGE — practitioner's calling card ====================== --}}
+
+<header class="hero">
+  <div class="container">
+    <div class="sys-label">// rootdrifter — security practitioner</div>
+    <h1>Root<span class="slash">//</span>Drifter</h1>
+    <div class="hero-sub">Hardened systems · offensive methodology · detection engineering</div>
+    <p class="typed-line" aria-label="Security-cleared and deployable from day one, with no vetting delay.">
+      <span id="typed"></span><span class="cursor" aria-hidden="true">&#9608;</span>
+    </p>
+    <noscript><p class="typed-line">Security-cleared. Deployable from day one — no vetting delay.</p></noscript>
+    <div class="status-row">
+      <span class="status-tag st-cleared">&#9679; Cleared</span>
+      <span class="status-tag st-active">&#9679; Active</span>
+      <span class="status-tag st-avail">&#9679; Available</span>
+    </div>
+    <div class="hero-links">
+      <a class="btn" href="https://rootdrifter.github.io" rel="noopener">View portfolio &#8594;</a>
+      <a class="btn ghost" href="{{@site.url}}/blog/">Read the blog &#8595;</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  {{!-- ABOUT --}}
+  <div class="section-break"><h2>About</h2></div>
+  <p>rootdrifter is the working handle of a security-cleared professional building toward cleared
+  entry-level roles in the UK, Netherlands, and Germany. The clearance is held now — not pending a
+  conditional offer — which is stated here as a plain fact rather than a pitch: it means deployment to
+  cleared work without the months-long vetting wait most graduates carry.</p>
+  <p>The approach is to build and to break with the same discipline, and to document both to a standard
+  a reviewer can audit. That has produced a hardened Linux workstation and a compartmentalised mobile
+  platform, a grey-box penetration test mapped to recognised benchmarks, and dissertation-level research
+  into whether language models can reason causally about social engineering rather than just pattern-match
+  it. Current focus: CompTIA Security+, active CTF practice, and a Wazuh SIEM home lab for hands-on
+  detection engineering.</p>
+  <p>Academic background: a First Class BSc in Computer Networks &amp; Cyber Security from
+  [UNIVERSITY]. Named CV available on request — this site stays pseudonymous by design. ([YOUR NAME]
+  on a formal application.)</p>
+
+  {{!-- PORTFOLIO STRIP --}}
+  <div class="section-break"><h2>Portfolio</h2></div>
+  <div class="pf-strip">
+    <div class="pf-item">
+      <span class="pf-kind">Defensive build</span>
+      <p>A hardened Linux workstation: full-disk encryption unlocked by a hardware security key, remote
+      pre-boot unlock, and all DNS filtered before it leaves the host.</p>
+    </div>
+    <div class="pf-item">
+      <span class="pf-kind">Offensive</span>
+      <p>A grey-box penetration test run end to end from a self-hardened server — enumeration to
+      privilege-escalation analysis, findings mapped to CWE, CIS, and ISO/IEC 27002.</p>
+    </div>
+    <div class="pf-item">
+      <span class="pf-kind">Research</span>
+      <p>Applied ML security: causal evaluation of social-engineering detection, and leakage-free image
+      classification under class imbalance — the discipline behind rare-attack-class detection.</p>
+    </div>
+  </div>
+  <p><a href="https://rootdrifter.github.io" rel="noopener"><strong>Full portfolio &#8594;&nbsp;&nbsp;rootdrifter.github.io</strong></a></p>
+
+  {{!-- LATEST WRITING --}}
+  <div class="section-break"><h2>Latest writing</h2></div>
+  {{#get "posts" limit="3" include="tags" as |recent|}}
+    {{#if recent}}
+      <div class="post-feed">
+        {{#foreach recent}}{{> post-card}}{{/foreach}}
+      </div>
+      <p><a href="{{@site.url}}/blog/">All posts &#8594;</a></p>
+    {{else}}
+      <div class="info-block">
+        <span class="blk-label">// blog</span>
+        Writing goes live here shortly — CTF writeups and repeatable security methodology, the same
+        evidence-led format as the portfolio.
+      </div>
+    {{/if}}
+  {{/get}}
+
+  {{!-- ACTIVE WORK --}}
+  <div class="section-break"><h2>Active work</h2></div>
+  <div class="ops-board">
+    <div class="ops-row"><span class="ops-tag st-progress">In progress</span> CompTIA Sec+ SY0-701</div>
+    <div class="ops-row"><span class="ops-tag st-progress">In progress</span> Wazuh SIEM home lab — detection engineering</div>
+    <div class="ops-row"><span class="ops-tag st-active">Active</span> CTF practice — TryHackMe / HackTheBox</div>
+    <div class="ops-row"><span class="ops-tag st-avail">Available</span> Cleared entry-level roles — UK / NL / DE</div>
+  </div>
+
+  {{!-- CONTACT --}}
+  <div class="section-break"><h2>Contact</h2></div>
+  <div class="info-block">
+    <span class="blk-label">// available for cleared work</span>
+    <p><a href="mailto:hello@rootdrifter.io">hello@rootdrifter.io</a>
+    &nbsp;&middot;&nbsp; <a href="https://github.com/rootdrifter" rel="noopener">github.com/rootdrifter</a></p>
+    <p>Open to cleared security roles in the UK, Netherlands, and Germany. CV available on request.</p>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var el = document.getElementById('typed');
+  if (!el) return;
+  var PHRASES = [
+    'Security-cleared. Deployable from day one.',
+    'Cleared professional. No vetting delay.',
+    'Building toward cleared security roles.'
+  ];
+  if (reduce) { el.textContent = PHRASES[0]; return; }
+  var p = 0, c = 0, del = false;
+  (function tick() {
+    var s = PHRASES[p];
+    if (!del) {
+      el.textContent = s.slice(0, ++c);
+      if (c === s.length) { del = true; setTimeout(tick, 2000); return; }
+      setTimeout(tick, 50);
+    } else {
+      el.textContent = s.slice(0, --c);
+      if (c === 0) { del = false; p = (p + 1) % PHRASES.length; setTimeout(tick, 350); return; }
+      setTimeout(tick, 30);
+    }
+  })();
+})();
+</script>
+
+{{else}}
+{{!-- ====================== /blog/ COLLECTION LISTING ====================== --}}
+<div class="container">
+  <div class="section-break"><h2>Writing</h2></div>
+  {{#if posts}}
+    <div class="post-feed">
+      {{#foreach posts}}{{> post-card}}{{/foreach}}
+    </div>
+    {{pagination}}
+  {{else}}
+    <div class="info-block">
+      <span class="blk-label">// blog</span>
+      No posts published yet. CTF writeups and security methodology are on the way.
+    </div>
+  {{/if}}
+</div>
+{{/is}}

@@ -1,0 +1,21 @@
+# Ghost dynamic routing.
+# DESTINATION when Ghost is running: /home/exiled/ghost/rootdrifter-dev/content/settings/routes.yaml
+# (Upload via Ghost Admin → Settings → Labs → Routes, or copy the file and `ghost restart`.)
+#
+# NOTE: corrected from the session directive's shorthand to valid Ghost YAML.
+# The directive wrote `/about/: page: about` which is not valid Ghost routing syntax and would
+# stop Ghost from starting. Static pages (About, Contact) are served automatically by Ghost at
+# /{slug}/ once the pages exist, so they need no explicit route entry and are intentionally left
+# implicit (pinning them before the pages exist would also break startup).
+
+routes:
+  /:
+    template: index          # homepage renders index.hbs via its {{#is "home"}} branch
+
+collections:
+  /blog/:
+    permalink: /blog/{slug}/
+    template: index          # blog listing renders index.hbs via its {{else}} branch
+
+taxonomies:
+  tag: /tag/{slug}/

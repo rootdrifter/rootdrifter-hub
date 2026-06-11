@@ -1,0 +1,12 @@
+{{!-- Fixed top navigation — shared across every page --}}
+<nav class="pnav" aria-label="Primary navigation">
+  <a class="pnav-brand" href="{{@site.url}}">ROOTDRIFTER<span class="dim">//</span>IO</a>
+  <button class="pnav-toggle" id="pnavToggle" aria-expanded="false" aria-controls="pnavLinks">&#9776; MENU</button>
+  <div class="pnav-links" id="pnavLinks">
+    <a class="ext" href="https://rootdrifter.github.io" rel="noopener">PORTFOLIO &#8599;</a>
+    <a href="{{@site.url}}/blog/"{{#is "index, tag"}} class="active" aria-current="page"{{/is}}>BLOG</a>
+    <a href="{{@site.url}}/about/">ABOUT</a>
+    <a href="mailto:hello@rootdrifter.io">CONTACT</a>
+    <a class="ext" href="https://github.com/rootdrifter" rel="noopener">GITHUB &#8599;</a>
+  </div>
+</nav>

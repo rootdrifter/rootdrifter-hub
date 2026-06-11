@@ -1,0 +1,11 @@
+{{!-- Reusable post card — used in index.hbs and tag.hbs (inside a post context) --}}
+<a class="post-card" href="{{url}}">
+  <div class="pc-meta">
+    <span>{{date format="DD MMM YYYY"}}</span>
+    {{#if reading_time}}<span>{{reading_time}}</span>{{/if}}
+    {{#primary_tag}}<span>{{name}}</span>{{/primary_tag}}
+  </div>
+  <div class="pc-title">{{title}}</div>
+  <p class="pc-excerpt">{{excerpt characters="160"}}</p>
+  <span class="pc-cta">Read &#8594;</span>
+</a>

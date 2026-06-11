@@ -1,0 +1,16 @@
+{{!< default}}
+<div class="container">
+  <div class="error-wrap">
+    <div class="sys-label">// error — resource not located</div>
+    <div class="error-code">{{error.statusCode}}</div>
+    <p class="hero-sub" style="margin-top:0.75rem">{{error.message}}</p>
+    <p style="margin:1.5rem auto 0;max-width:520px;color:var(--text)">
+      The requested resource could not be located. It may have moved, or it never existed.
+    </p>
+    <div class="hero-links" style="justify-content:center;margin-top:2rem">
+      <a class="btn" href="{{@site.url}}">Home</a>
+      <a class="btn ghost" href="https://rootdrifter.github.io" rel="noopener">Portfolio</a>
+      <a class="btn ghost" href="{{@site.url}}/blog/">Blog</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+{
+  "db": [
+    {
+      "meta": {
+        "exported_on": 1781136317834,
+        "version": "5.0.0"
+      },
+      "data": {
+        "posts": [
+          {
+            "id": "d9a6389192dde07e82e0c38e",
+            "title": "WriteUp: [Machine Name] \u2014 [Platform] [Difficulty]",
+            "slug": "writeup-sample-machine",
+            "mobiledoc": "{\"version\": \"0.3.1\", \"atoms\": [], \"cards\": [[\"markdown\", {\"markdown\": \"# WriteUp: [Machine Name] \\u2014 [Platform] [Difficulty]\\n\\n> Sample post \\u2014 demonstrates the CTF-writeup content model. All values are placeholders; no real\\n> machine names, IPs, or flag values appear. Documentation IPs only (RFC 5737: 192.0.2.x).\\n> Tags: ctf-writeup, [platform]\\n\\n## Executive summary\\n\\nA [Linux/Windows] target exposing [service] on port [N]. The path to compromise runs through\\n[vulnerability class] \\u2014 [one-sentence description]. The service account context is [user], so\\n[privilege escalation required / foothold is root]. The methodology, not the tooling, is the point:\\nread the version off the scan, map it to a known issue, and choose the cleanest path.\\n\\n## 1. Reconnaissance\\n\\n```\\nnmap -sC -sV -p- -oA nmap/target 192.0.2.10\\n```\\n\\n**nmap flag rationale** \\u2014 `-p-` scans all 65,535 TCP ports (services on high ports are the classic\\nmiss); `-sV` reads service versions (the version string is what maps to a known issue); `-sC` runs the\\ndefault NSE scripts for cheap banner/config hints; `-oA` saves all output formats as evidence.\\n\\n**What to look for in the scan:** old service banners that predate a known fix, and any non-standard\\nhigh port. One legacy service is usually the whole path.\\n\\n| Port | Service | Version | Note |\\n|------|---------|---------|------|\\n| [N] | [service] | [version] | The vector |\\n\\n## 2. Enumeration\\n\\n```\\n[service-specific enumeration commands]\\n```\\n\\n**What to look for:** [the one load-bearing fact this box turns on]. Document what you *ruled out* \\u2014\\na dead end is evidence that narrows the path.\\n\\n## 3. Exploitation\\n\\n- **Chosen vector and why:** [vector] over [alternative] \\u2014 [reason it is cleaner].\\n- **[ATT&CK Txxxx \\u2014 technique name]** for the foothold.\\n\\n```\\n[foothold command(s) \\u2014 payload referenced, not pasted wholesale]\\n```\\n\\n- **User flag:** `[captured]`\\n\\n## 4. Privilege escalation\\n\\n```\\nsudo -l ; find / -perm -4000 2>/dev/null    # highest-yield checks first\\n```\\n\\n- **[ATT&CK Txxxx \\u2014 technique name]** for the escalation.\\n- **Root flag:** `[captured]`\\n\\n## 5. Defender perspective \\u2014 logs & detection\\n\\nWhat this looks like from a monitored SOC, and the rule that would catch it.\\n\\n- **Log artefacts:** [which logs / Event IDs the activity generates].\\n- **Detection logic:** [a Sigma- or Splunk-style rule keyed on the malicious behaviour].\\n- **Why it fires:** [the exploit *requires* the behaviour the rule keys on].\\n- **Defensive control:** [patch / least privilege / segmentation / alert].\\n\\n## 6. Key learnings\\n\\n- [Transferable technique this box demonstrated.]\\n- [Tooling note / faster alternative.]\\n- [Blue-team transfer \\u2014 the detection lesson.]\\n\"}]], \"markups\": [], \"sections\": [[10, 0]]}",
+            "feature_image": null,
+            "type": "post",
+            "status": "published",
+            "visibility": "public",
+            "created_at": "2026-06-11T00:00:00.000Z",
+            "updated_at": "2026-06-11T00:00:00.000Z",
+            "published_at": "2026-06-11T00:00:00.000Z",
+            "custom_excerpt": "Sample CTF writeup demonstrating the content model \u2014 recon, exploitation, privesc, and the defender-perspective detection mapping. All placeholders."
+          },
+          {
+            "id": "dee1f1b30ae80ec50a2a45e0",
+            "title": "Enumeration Methodology: Building a Repeatable Recon Framework",
+            "slug": "enumeration-methodology",
+            "mobiledoc": "{\"version\": \"0.3.1\", \"atoms\": [], \"cards\": [[\"markdown\", {\"markdown\": \"# Enumeration Methodology: Building a Repeatable Recon Framework\\n\\n> Sample post \\u2014 demonstrates the methodology content pillar. Entirely generalised; no operational\\n> specifics, no real hosts. Documentation IPs only (RFC 5737: 192.0.2.x).\\n> Tags: methodology, pentesting\\n\\nEnumeration is where engagements are won or lost. A missed service, an unread banner, or a skipped\\nshare is the single most common reason a box \\u2014 or a real assessment \\u2014 stalls. The fix is not a better\\ntool; it is a **repeatable framework** you run the same way every time, so the result depends on the\\nmethod and not on the day.\\n\\n## Principle: breadth first, then depth\\n\\nMap the entire surface before committing to any one vector. The order is always the same:\\n\\n1. **Full port sweep** \\u2014 find *everything* that listens, including the non-standard high ports.\\n2. **Service/version scan** \\u2014 only on what is open; the version string is what maps to a known issue.\\n3. **Per-service depth** \\u2014 enumerate each service in turn, recording what you rule out.\\n\\n```\\nnmap -p- --min-rate=1000 -oN nmap/allports 192.0.2.10\\nnmap -sC -sV -p<open,ports> -oN nmap/services 192.0.2.10\\n```\\n\\nDocumentation ranges (192.0.2.0/24, 198.51.100.0/24) stand in for real targets throughout \\u2014 never\\npublish a live address.\\n\\n## Per-service first moves\\n\\n| Service | First moves |\\n|---------|-------------|\\n| HTTP/S  | `whatweb`; view source/JS/comments; directory and vhost discovery; `robots.txt`, default creds |\\n| SMB     | `enum4linux -a`; share listing; null-session; user enumeration |\\n| FTP     | banner/version; anonymous login; version-specific issues |\\n| SSH     | version only \\u2014 rarely the foothold; note for credential reuse later |\\n| NFS     | `showmount -e`; mountable exports; look for keys/configs |\\n| DNS     | zone-transfer attempt; subdomain discovery |\\n\\n## Document the negative space\\n\\nThe discipline that separates a writeup from a tool dump is recording what *failed*. \\\"FTP anonymous =\\ndenied\\\" is evidence: it narrows the path. A framework that only logs successes is unreproducible and\\nhides the reasoning a reviewer is actually buying.\\n\\n## Map every version to a known issue *before* acting\\n\\nRead the version, then check it against public advisories before running anything noisy. On legacy\\ntargets this single habit \\u2014 version \\u2192 known issue \\u2014 is frequently the whole solve.\\n\\n## The blue-team mirror\\n\\nEvery enumeration step is loud. Directory brute-forcing floods web logs with 404s; SMB user\\nenumeration creates a burst of short-lived sessions; an online credential attempt leaves a\\nfailed-then-success pattern in the auth log. Knowing *what your own recon looks like in a defender's\\nSIEM* is what turns offensive practice into detection capability \\u2014 the same framework, read from the\\nother side. (This is the connective tissue between a pentest and a SOC role.)\\n\\n## The repeatable loop\\n\\n```\\nscan all ports \\u2192 service-scan what's open \\u2192 enumerate each service (log the dead ends)\\n  \\u2192 map versions to known issues \\u2192 pick a vector (record why) \\u2192 foothold \\u2192 stabilise \\u2192 escalate\\n  \\u2192 capture evidence (logs + named screenshots + hashes) \\u2192 write up, including what failed\\n```\\n\\nRun it the same way every time. Consistency is the capability.\\n\"}]], \"markups\": [], \"sections\": [[10, 0]]}",
+            "feature_image": null,
+            "type": "post",
+            "status": "published",
+            "visibility": "public",
+            "created_at": "2026-06-11T00:00:00.000Z",
+            "updated_at": "2026-06-11T00:00:00.000Z",
+            "published_at": "2026-06-11T00:00:00.000Z",
+            "custom_excerpt": "A repeatable recon framework: breadth-first enumeration, documenting dead ends, and the blue-team mirror that turns offensive practice into detection capability."
+          },
+          {
+            "id": "d96f6743ab4de392b73aff8a",
+            "title": "About",
+            "slug": "about",
+            "mobiledoc": "{\"version\": \"0.3.1\", \"atoms\": [], \"cards\": [[\"markdown\", {\"markdown\": \"# About\\n\\nrootdrifter is the working handle of a security-cleared professional building toward cleared entry-level roles in the UK, Netherlands, and Germany. This site is intentionally pseudonymous; a named CV ([YOUR NAME], [UNIVERSITY]) is available on request.\\n\\nThe work spans both sides of the discipline: hardened endpoint and mobile builds, a benchmark-mapped grey-box penetration test, and applied ML security research \\u2014 each documented to a standard a reviewer can audit. Current focus is CompTIA Security+, active CTF practice, and a Wazuh SIEM home lab for hands-on detection engineering.\\n\\nFull portfolio: rootdrifter.github.io. Contact: hello@rootdrifter.io.\\n\"}]], \"markups\": [], \"sections\": [[10, 0]]}",
+            "feature_image": null,
+            "type": "page",
+            "status": "published",
+            "visibility": "public",
+            "created_at": "2026-06-11T00:00:00.000Z",
+            "updated_at": "2026-06-11T00:00:00.000Z",
+            "published_at": "2026-06-11T00:00:00.000Z",
+            "custom_excerpt": null
+          }
+        ],
+        "tags": [
+          {
+            "id": "e9abe0a63fbb29280d2b4f32",
+            "name": "ctf-writeup",
+            "slug": "ctf-writeup"
+          },
+          {
+            "id": "749faa50c517ec917af5ef95",
+            "name": "tryhackme",
+            "slug": "tryhackme"
+          },
+          {
+            "id": "4c012b47fc4c4f0b6baf57dd",
+            "name": "methodology",
+            "slug": "methodology"
+          },
+          {
+            "id": "7984a04870a41cc5aea9883f",
+            "name": "pentesting",
+            "slug": "pentesting"
+          }
+        ],
+        "posts_tags": [
+          {
+            "post_id": "d9a6389192dde07e82e0c38e",
+            "tag_id": "e9abe0a63fbb29280d2b4f32",
+            "sort_order": 0
+          },
+          {
+            "post_id": "d9a6389192dde07e82e0c38e",
+            "tag_id": "749faa50c517ec917af5ef95",
+            "sort_order": 1
+          },
+          {
+            "post_id": "dee1f1b30ae80ec50a2a45e0",
+            "tag_id": "4c012b47fc4c4f0b6baf57dd",
+            "sort_order": 0
+          },
+          {
+            "post_id": "dee1f1b30ae80ec50a2a45e0",
+            "tag_id": "7984a04870a41cc5aea9883f",
+            "sort_order": 1
+          }
+        ]
+      }
+    }
+  ]
+}
