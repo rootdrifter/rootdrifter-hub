@@ -36,9 +36,18 @@ and the `// TRANSMISSION INCOMING` overlay with a subscribe form.
 | WriteUp: Steel Mountain — TryHackMe (Windows) | DRAFT | - | From gauntlet stub — publish when completed |
 | WriteUp: Alfred — TryHackMe (Windows) | DRAFT | - | From gauntlet stub — publish when completed |
 | WriteUp: Basic Pentesting — TryHackMe (Linux) | DRAFT | - | From gauntlet stub — publish when completed |
+| WriteUp: Jerry — HackTheBox (Windows) | DRAFT | - | From gauntlet stub — Tomcat default-creds → WAR shell; publish when completed |
+| WriteUp: Lame — HackTheBox (Linux) | DRAFT | - | From gauntlet stub — Samba CVE-2007-2447; publish when completed |
+| Sec+ Domain 4: Security Operations (study notes) | DRAFT | - | Blog-toned SOC overview; publish when reviewed |
+| Sec+ Domain 1: General Security Concepts (study notes) | DRAFT | - | Blog-toned foundations overview; publish when reviewed |
 
 Count rule: "transmissions in preparation" on the homepage = published teaser posts + real
-machine-writeup drafts (placeholder templates excluded). Currently 3 + 5 = **8**.
+machine-writeup / study-note drafts (placeholder templates excluded). Currently 3 published + 9
+drafts (5 THM + 2 HTB + 2 Sec+) = **12**.
+
+> Note: a Sec+ Domain 2 post is already **published** (teaser-gated), so the new Sec+ drafts are
+> Domain 4 (the SOC-critical domain) and Domain 1 (foundations) to avoid duplication. All 7
+> gauntlet stubs now have draft posts (5 THM + 2 HTB).
 
 ## Approval criteria
 
