@@ -81,8 +81,9 @@ Each static spec page is converted to Ghost-compatible markdown in `content/page
 | Interactive components | inline `<script>` | standalone `theme/assets/js/<project>-*.js`, self-mounting |
 
 **Accuracy invariants carry over verbatim** (oracle 93.97/0.9390 vs 99.11/0.9916 — never
-swapped; mirage 88,647 / ICC 0.98; spectre Apache 2.4.58 / CWE-548; nullbyte nine profiles /
-Titan M2; ironveil Nitrokey 3A NFC / fw 1.8.3 / wg-SE-RO-1).
+swapped; mirage 88,647 / ICC 0.98; spectre Apache 2.4.58 / CWE-548; nullbyte nine profiles incl.
+Ghost / Titan M2; ironveil Nitrokey 3A NFC / fw 1.8.3 / tunnels `wg-CH-FI-2` + `wg-SE-FI-1` /
+AdGuard Quad9 DoH).
 
 ## Interactive components
 

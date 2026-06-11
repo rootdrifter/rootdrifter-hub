@@ -4,17 +4,18 @@ title: IRONVEIL — Hardened Fedora Workstation
 excerpt: FEDORA WORKSTATION · LUKS2 · FIDO2 · WIREGUARD · DRACUT-SSHD · LIVING BUILD
 -->
 
-> **// STATUS — OPERATIONAL · rev 2026-06-10 · LIVING BUILD**
+> **// STATUS — OPERATIONAL · rev 2026-06-11 · LIVING BUILD**
 
 > **// Overview** — Hardened Fedora workstation built to a defence-in-depth security model.
 > LUKS2 full-disk encryption requires physical hardware key presence for unlock. If the key is
 > unavailable, the machine can still be unlocked remotely over SSH from a GrapheneOS mobile
 > platform — without the initramfs ever trusting a password over the network. WireGuard routes
-> all external traffic; AdGuard Home intercepts all DNS before it leaves the host.
+> all external traffic; AdGuard Home filters all DNS to an encrypted upstream before it leaves
+> the host.
 
-> **// Living Build** — This is an actively maintained workstation build, not a static project.
-> Sections marked MANUAL INPUT REQUIRED require values captured from the running machine and
-> will be updated in a future session.
+> **// Living Build** — An actively maintained workstation build. The core hardware values were
+> captured and verified on 2026-06-11; a couple of secondary items (unlock-latency benchmark,
+> SELinux/seccomp status) remain pending and are labelled as such below.
 
 ---
 
@@ -27,12 +28,12 @@ specific attack path — not because it adds capability.
 
 | Threat | Control |
 |--------|---------|
-| Offline disk clone and brute-force | LUKS2 with Argon2id KDF; hardware key required to unlock |
-| Primary hardware key lost or seized | NK#2 backup keyslot; passphrase emergency fallback |
+| Offline disk clone and brute-force | LUKS2 `aes-xts-plain64`/512-bit; Argon2id passphrase slot; hardware key required to unlock |
+| Primary hardware key lost or seized | Backup Nitrokey keyslot; passphrase emergency fallback |
 | Hardware key cloned without touch | Touch-only FIDO2 enrollment; Nitrokey 3A NFC requires physical presence |
-| Remote workstation inaccessible for unlock | dracut-sshd: SSH into initramfs from GrapheneOS |
-| DNS traffic leakage and exfiltration | AdGuard Home filtering; systemd-resolved bound to loopback |
-| Traffic interception and geolocation | WireGuard VPN on all external traffic with kill-switch |
+| Remote workstation inaccessible for unlock | dracut-sshd: SSH into the initramfs over the pre-boot network |
+| DNS traffic leakage and exfiltration | AdGuard Home → Quad9 DoH over the tunnel; no plaintext query leaves the host |
+| Traffic interception and geolocation | WireGuard full-tunnel routing on all external traffic |
 
 ---
 
@@ -40,40 +41,53 @@ specific attack path — not because it adds capability.
 
 ### LUKS2 Full-Disk Encryption
 
-Encrypted volume: `/dev/sda3`. Three keyslots: Slot 0 (passphrase — emergency fallback only,
-stored offline), Slot 1 (Nitrokey NK#1 — daily driver, touch required), Slot 2 (Nitrokey NK#2 —
-kept offline, activated if NK#1 is lost). LUKS2 uses Argon2id as the key derivation function.
-Hardware key slots enroll FIDO2 credentials — the passphrase is never sent to the key.
+Encrypted volume: LUKS2 container UUID `6cbc50ba-6f8a-4932-abfc-f2d0504a29b3`, mapped as
+`luks-6cbc50ba-…`, cipher **`aes-xts-plain64`, 512-bit key**. Three keyslots: Slot 0 (passphrase,
+**Argon2id** — emergency/recovery fallback, stored offline), Slot 1 (primary Nitrokey 3A NFC,
+**PBKDF2/SHA-512** — daily driver, touch required), Slot 2 (backup Nitrokey 3A NFC — kept offline).
+The FIDO2 slots derive their key with the Nitrokey credential; the passphrase is never sent to the
+key. `crypttab` references the volume by UUID with `discard,x-initrd.attach,fido2-device=auto`.
 
 ### Nitrokey 3A NFC — FIDO2 Hardware Key
 
-Hardware: Nitrokey 3A NFC · Firmware: 1.8.3 · Enrollment mode: touch-only — physical presence
-required for every unlock event. clientPin is not supported on this firmware version; reliance
-is on touch confirmation. The touch-only constraint is intentional: a key activatable remotely
+Hardware: Nitrokey 3A NFC · Firmware: 1.8.3 · **Two tokens enrolled** · Enrollment mode:
+touch-only (`fido2-up-required=true`) with **no clientPin** (`fido2-clientPin-required=false`) —
+physical presence is required for every unlock event, but no PIN is involved. clientPin is not
+supported on this firmware; the touch-only constraint is intentional: a key activatable remotely
 would defeat the physical-presence guarantee.
 
 ### dracut-sshd — Remote Unlock via SSH
 
-The initramfs is built with `dracut-sshd`, which starts a minimal SSH daemon at pre-boot.
-Unlock flow: machine reaches initramfs SSH listener → GrapheneOS (Termux) connects via
-`ssh unlock@$IRONVEIL_IP` → Termux ed25519 public key (baked into initramfs at build time)
-authenticates → authenticated session triggers `systemd-cryptsetup@sda3` → volume unlocks,
-boot continues. The initramfs SSH host key is pinned on the GrapheneOS client to prevent MITM
-substitution.
+The initramfs is built with `dracut-sshd` (**v0.7.1-5.fc44**), plus the `systemd-networkd` and
+`fido2` modules, so wired networking comes up pre-boot (`rd.neednet=1`) and a Nitrokey touch can
+satisfy the LUKS prompt directly. Unlock flow: machine reaches the initramfs SSH listener → the
+GrapheneOS handset (Termux) connects over Tailscale (Tailscale runs on the client, not in the
+initramfs — reachability comes from the LAN the pre-boot interface sits on being exposed over the
+tailnet) → the embedded ed25519 public key authenticates (host key pinned on the client) →
+`systemd-tty-ask-password-agent` drives the unlock, a Nitrokey present at the machine is touched,
+and boot continues. Built on **Fedora 44, kernel `7.0.11-200.fc44.x86_64`**.
 
-### WireGuard VPN — wg-SE-RO-1
+### WireGuard VPN — wg-CH-FI-2 and wg-SE-FI-1
 
-Interface: `wg-SE-RO-1` (named-tunnel model encoding endpoint region). Managed by
-NetworkManager as a first-class network connection. All external traffic routed through the
-tunnel. Kill-switch rule drops traffic if the interface drops. The rename from `wg0` reflects
-a move toward multi-tunnel readability.
+Two NetworkManager tunnels: **`wg-CH-FI-2`** (endpoint `79.135.104.69:51820`) and
+**`wg-SE-FI-1`** (`185.159.156.27:51820`), each with full-tunnel `AllowedIPs` (`0.0.0.0/0, ::/0`),
+interface address `10.2.0.2/32`, and a 25-second keepalive. Activation is **manual**
+(`autoconnect=false`). The named-tunnel model encodes the endpoint region for multi-tunnel
+readability. **Kill-switch — honest description:** the protection is *route-based*, not a separate
+fail-closed rule — while a tunnel is up, the full-tunnel `AllowedIPs` makes it the default route, so
+traffic is tunnel-bound; there is no nftables/dispatcher rule that drops traffic if the interface
+goes down (a hard fail-closed kill-switch is planned).
 
 ### AdGuard Home DNS Filtering
 
-Upstream DNS: WireGuard peer at `10.2.0.1` — DNS queries traverse the encrypted tunnel before
-reaching a resolver. Listener: `127.0.0.1:53`. `systemd-resolved` configured to forward all
-queries to `127.0.0.1`. DNS chain: application → systemd-resolved (loopback) → AdGuard Home →
-WireGuard → upstream resolver. External observer sees only WireGuard-encrypted traffic.
+AdGuard Home (install path `/opt/AdGuardHome/`) is the system resolver, listening on **`*:53`**
+(pid 1452). Its only upstream is **Quad9 over DNS-over-HTTPS** (`https://dns10.quad9.net/dns-query`,
+bootstrap `9.9.9.10` / `149.112.112.10`), so every query leaves already encrypted and egresses
+through the active WireGuard tunnel. Block list: **AdGuard DNS filter**. `systemd-resolved` forwards
+all queries to `127.0.0.1` (stub listener off) so AdGuard owns port 53. DNS chain: application →
+systemd-resolved (127.0.0.1) → AdGuard Home (`:53`) → Quad9 DoH → active WireGuard tunnel. The
+no-plaintext-egress property rests on the DoH-over-tunnel upstream, not on a loopback bind. (The VPN
+provider also pushes `10.2.0.1`, but AdGuard overrides it — it is not the effective upstream.)
 
 ### OpenRGB — Peripheral Configuration
 
@@ -88,11 +102,11 @@ iCUE). No vendor software installed. Commander Pro detected as USB HID device.
 | Layer | Control | Threat addressed |
 |-------|---------|------------------|
 | Physical | Nitrokey 3A NFC FIDO2, touch-only enrollment (fw 1.8.3, no clientPin) | Remote/unattended hardware-key activation |
-| Disk | LUKS2 volume on `/dev/sda3` with Argon2id KDF | Offline disk clone and brute-force key derivation |
-| Boot | dracut-sshd pre-boot SSH with pinned ed25519 host key | Unattended unlock; MITM key substitution during unlock |
-| Key Custody | NK#1 primary, NK#2 offline backup, offline emergency passphrase | Single point of key failure; primary key loss or seizure |
-| Network | WireGuard `wg-SE-RO-1` (NetworkManager) with kill-switch | Traffic interception, geolocation, leakage if tunnel drops |
-| DNS | AdGuard Home on `127.0.0.1:53` + systemd-resolved loopback; upstream via `10.2.0.1` over WireGuard | Plaintext DNS leakage; tracker and malicious domain resolution |
+| Disk | LUKS2 `aes-xts-plain64`/512-bit (UUID `6cbc50ba-…`), Argon2id passphrase slot | Offline disk clone and brute-force key derivation |
+| Boot | dracut-sshd (v0.7.1-5.fc44) pre-boot SSH with pinned ed25519 host key | Unattended unlock; MITM key substitution during unlock |
+| Key Custody | Primary Nitrokey, backup Nitrokey offline, offline emergency passphrase | Single point of key failure; primary key loss or seizure |
+| Network | WireGuard `wg-CH-FI-2` / `wg-SE-FI-1` (NetworkManager, manual), full-tunnel routing | Traffic interception, geolocation, leakage if tunnel drops |
+| DNS | AdGuard Home on `*:53` → Quad9 DoH over the active tunnel; systemd-resolved forwards to it | Plaintext DNS leakage; tracker and malicious domain resolution |
 
 ---
 
@@ -102,21 +116,19 @@ iCUE). No vendor software installed. Commander Pro detected as USB HID device.
 
 | Status | Control | Protects against |
 |--------|---------|------------------|
-| Operational | LUKS2 Argon2id full-disk encryption — all three keyslots active | Offline disk clone and brute-force key derivation; memory-hard KDF raises GPU/ASIC guessing cost; keyslot custody removes single point of key failure |
-| Operational | Nitrokey NK#1 FIDO2 enrollment — firmware 1.8.3, touch-only | Hardware-key activation without physical presence; touch required for every unlock event |
-| Enrolled | Nitrokey NK#2 backup keyslot — stored offline | Loss or seizure of the primary hardware key |
-| Operational | dracut-sshd remote unlock — Termux ed25519 key in initramfs | Headless machine impossible to unlock remotely; MITM key substitution (host key pinned); passphrase never sent over the network — unlock answered via `systemd-tty-ask-password-agent` |
-| Operational | WireGuard wg-SE-RO-1 — NetworkManager-managed | Traffic interception and geolocation; kill-switch fails closed |
-| Operational | AdGuard Home DNS filtering — upstream via 10.2.0.1 | Plaintext DNS leakage; tracker / malicious-domain resolution |
-| Operational | systemd-resolved → 127.0.0.1 loopback binding | Applications bypassing the DNS filter |
-| Operational | OpenRGB (Razer + Corsair) — vendor daemons absent | Vendor cloud-daemon telemetry; unnecessary supply-chain surface |
-| **MANUAL INPUT** | LUKS2 exact cipher + key size — `sudo cryptsetup luksDump /dev/sda3` | Pending — published once captured from the running machine |
-| **MANUAL INPUT** | Fedora release + kernel — `cat /etc/fedora-release && uname -r` | Pending — captured in a hardware session |
-| **MANUAL INPUT** | SELinux/seccomp status — `getenforce && sestatus` | Pending — reported only as measured, never assumed |
-| **MANUAL INPUT** | LUKS2 unlock-latency benchmark — hardware key vs passphrase | Pending — measured, not estimated |
+| Verified | LUKS2 `aes-xts-plain64`/512-bit, Argon2id + 2× FIDO2 — 3 keyslots active | Offline disk clone and brute-force key derivation; memory-hard KDF raises GPU/ASIC guessing cost; keyslot custody removes single point of key failure |
+| Verified | Nitrokey 3A NFC FIDO2 — 2 tokens, firmware 1.8.3, touch-only, no clientPin | Hardware-key activation without physical presence; touch required for every unlock event |
+| Verified | dracut-sshd remote unlock — v0.7.1-5.fc44; systemd-networkd + fido2 modules | Headless machine impossible to unlock remotely; MITM key substitution (host key pinned); passphrase never sent over the network |
+| Verified | WireGuard `wg-CH-FI-2` + `wg-SE-FI-1` — NetworkManager, manual, full-tunnel | Traffic interception and geolocation; route-based kill-switch while the tunnel is up |
+| Verified | AdGuard Home DNS filtering — Quad9 DoH upstream, `*:53`, AdGuard DNS filter | Plaintext DNS leakage; tracker / malicious-domain resolution |
+| Verified | systemd-resolved → 127.0.0.1 (stub listener off) | Applications bypassing the DNS filter |
+| Verified | Build platform — Fedora 44, kernel 7.0.11-200.fc44.x86_64 | Reproducibility / auditability of the build |
+| Verified | OpenRGB (Razer + Corsair) — vendor daemons absent | Vendor cloud-daemon telemetry; unnecessary supply-chain surface |
+| **PENDING** | SELinux/seccomp status — `getenforce && sestatus` | Reported only as measured on the host, never assumed |
+| **PENDING** | LUKS2 unlock-latency benchmark — hardware key vs passphrase | A usability data point to be measured, not estimated |
 
-> **MANUAL INPUT PENDING** — the four items above require values captured from the running
-> machine (see the repo's `MANUAL_INPUTS.md`). An honest gap beats invented completeness.
+> **PENDING** — the two items above are secondary values not captured in the 2026-06-11 hardware
+> session (see the repo's `MANUAL_INPUTS.md`). An honest gap beats invented completeness.
 
 ---
 
@@ -124,11 +136,11 @@ iCUE). No vendor software installed. Commander Pro detected as USB HID device.
 
 | Skill | Evidence |
 |-------|----------|
-| Linux Hardening | LUKS2 full-disk encryption with keyslot management and Argon2id KDF configuration |
-| FIDO2 / Hardware Key Integration | Nitrokey 3A NFC enrolled as LUKS2 keyslot with touch-only enforcement; CTAP2 credential flow |
-| Initramfs Engineering | dracut-sshd configured for pre-boot SSH with pinned ed25519 key; key rotation procedure documented |
-| Network Security | WireGuard VPN with kill-switch via NetworkManager; named-tunnel model for multi-tunnel readability |
-| DNS Security | AdGuard Home + systemd-resolved; DNS-over-WireGuard; loopback binding preventing unfiltered queries |
+| Linux Hardening | LUKS2 (aes-xts-plain64/512-bit) with keyslot management and Argon2id passphrase slot |
+| FIDO2 / Hardware Key Integration | Nitrokey 3A NFC enrolled as LUKS2 keyslots (touch-only, no clientPin); CTAP2 credential flow |
+| Initramfs Engineering | dracut-sshd (v0.7.1-5.fc44) pre-boot SSH with systemd-networkd + fido2; pinned ed25519 key |
+| Network Security | WireGuard full-tunnel routing via NetworkManager; named-tunnel model for multi-tunnel readability |
+| DNS Security | AdGuard Home → Quad9 DoH over the tunnel; encrypted upstream, no plaintext egress |
 | Defence in Depth | Each threat mapped to a compensating control across physical, disk, boot, network, and DNS layers |
 | Operational Security | Vendor cloud daemons eliminated; RGB peripherals managed via OpenRGB without telemetry |
 | Remote Operations | SSH-based unlock from GrapheneOS; IRONVEIL ↔ NULLBYTE integration for remote boot without physical presence |

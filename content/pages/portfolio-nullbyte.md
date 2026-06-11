@@ -4,8 +4,8 @@ title: NULLBYTE — GrapheneOS Mobile Platform
 excerpt: GRAPHENEOS · PIXEL 10 PRO FOLD · COMPARTMENTALISED PROFILE ARCHITECTURE · LIVING BUILD
 -->
 
-> **// STATUS — OPERATIONAL · rev 2026-06-10 · LIVING BUILD**
-> Device: Pixel 10 Pro Fold · SoC: Tensor G5 · Security chip: Titan M2 · Profiles: 9
+> **// STATUS — OPERATIONAL · rev 2026-06-11 · LIVING BUILD**
+> Device: Pixel 10 Pro Fold · SoC: Tensor G5 · Security chip: Titan M2 · GrapheneOS Android 16 · Profiles: 9
 
 GrapheneOS eliminates the trust compromises baked into stock Android: no Google Play Services
 in the owner profile, no persistent background reporting, **verified boot enforced at every
@@ -28,20 +28,33 @@ sequence from the handset.
 |-----------|-------|
 | Device | Google Pixel 10 Pro Fold |
 | SoC | Google Tensor G5 |
-| Security chip | Titan M2 |
+| Security chip | Titan M2 (confirmed) |
+| Security stack | Tensor G5 security core + Titan M2 + Trusty TEE |
+| OS | GrapheneOS — Android 16 |
+| Build number | 2026060601 |
 | Storage | 1 TB |
 | RAM | 16 GB |
 | IP rating | IP68 |
 
-> **// Hardware Root of Trust** — The Titan M2 security chip handles key storage, attestation,
-> and tamper detection independently of the main SoC. An attacker who compromises the Tensor G5
-> cannot forge the attestation chain without access to Titan M2.
+> **// Hardware Root of Trust** — The platform layers three hardware-rooted components: the
+> **Tensor G5 security core** (SoC-integrated), the discrete certified **Titan M2** chip, and the
+> **Trusty TEE** (Trusted Execution Environment). Titan M2 handles verified-boot attestation,
+> cryptographic key storage, tamper detection, and secure lock-screen enforcement independently of
+> the main SoC — physically separate from the application processor, so a compromised OS cannot
+> extract keys it holds, and an attacker who compromises the Tensor G5 cannot forge the attestation
+> chain without it.
 
 ---
 
 ## Security Architecture
 
 - Verified boot — Titan M2 root of trust → bootloader → OS image
+
+> **// Verified-boot key hash (confirmed)** —
+> `6836b3c55f753af0a70daafbc4cc6c06fdfe0fca8634e1f7db12e9e10fbd5613` — the fingerprint of the
+> verified-boot key signing this device's GrapheneOS build, independently verifiable against the
+> GrapheneOS release signing keys to confirm the build is authentic and unmodified.
+
 - Per-profile encryption — independent key per profile
 - Sandboxed Google Play — no system-level privileges
 - RethinkDNS — per-app network policy at VPN layer
@@ -140,19 +153,20 @@ accessible from any other profile on the device.
 
 | Status | Component |
 |--------|-----------|
-| Operational | **GrapheneOS** — Pixel 10 Pro Fold, bootloader relocked |
-| Active | **Titan M2 verified boot** — enforced on all power cycles |
+| Verified | **GrapheneOS** — Pixel 10 Pro Fold, Android 16 (build 2026060601), bootloader relocked |
+| Verified | **Verified boot key hash** — `6836b3c5…fbd5613` (full hash above) |
+| Verified | **Titan M2 secure element** — + Trusty TEE + Tensor G5 security core confirmed |
+| Verified | **Nine-profile architecture** — Nexus, Plague, Ghost, Abyss, Vault, Façade, Void, Joker, Shade (all present on device) |
 | Operational | **Per-profile encryption** — 9 profiles active |
 | Operational | **Sandboxed Google Play** — selective profiles only |
 | Operational | **RethinkDNS firewall** — per-app rules active |
 | Operational | **WireGuard** — profile-selective routing active |
 | Active | **Baseband IOMMU isolation** — hardware-enforced |
 | Operational | **Termux SSH to IRONVEIL** — Façade profile, ed25519 key enrolled |
-| **MANUAL INPUT** | **GrapheneOS version + patch level** — Settings → About phone |
-| **MANUAL INPUT** | **Verified boot key hash** — Settings → About phone → Verified boot key SHA-256 |
-| **MANUAL INPUT** | **Per-profile WireGuard routing config** — from RethinkDNS per-profile settings |
+| **PENDING** | **Exact GrapheneOS release tag + Tensor G5 kernel** — Android 16 / build 2026060601 captured; release-tag string + kernel still pending |
+| **PENDING** | **Per-profile WireGuard routing config** — from RethinkDNS per-profile settings |
 
-> **MANUAL INPUT PENDING** — the three items above require values captured from the device
+> **PENDING** — the two items above are secondary values not yet captured from the device
 > (see the repo's `MANUAL_INPUTS.md`).
 
 ---

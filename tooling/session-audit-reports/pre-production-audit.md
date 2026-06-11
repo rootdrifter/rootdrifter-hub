@@ -25,11 +25,12 @@ neither is a theme defect.
 - Brand reference present on every page (12–30 `rootdrifter` refs each).
 - Render errors (`undefined` / `NaN` / `>null<`): **0** on every page.
 - CSS loads (`screen.css` + `tokens.css`) on every page.
-- **Privacy content scan** (daemon codenames, passmail, rootdrift-typo, key material) across all
-  12 rendered pages: **0 hits**.
+- **Privacy content scan** (private codenames, mail-handle, malformed org handle, key material)
+  across all 12 rendered pages: **0 hits**.
 - **Accuracy invariants** verified in rendered portfolio output: oracle TerraCNN 93.97%/0.9390 vs
   ResNet-18 99.11%/0.9916 + ARI 0.6478 (not swapped); mirage 88,647 + ICC 0.98; nullbyte nine
-  profiles incl. Façade; spectre Apache 2.4.58 + CWE-548; ironveil wg-SE-RO-1 + fw 1.8.3.
+  profiles incl. Ghost + Façade; spectre Apache 2.4.58 + CWE-548; ironveil tunnels wg-CH-FI-2 +
+  wg-SE-FI-1, AdGuard Quad9 DoH, fw 1.8.3.
 
 ## Task 2 — Cross-browser compatibility
 
