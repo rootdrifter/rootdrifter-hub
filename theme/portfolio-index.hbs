@@ -1,0 +1,126 @@
+{{!< default}}
+{{!-- Portfolio index — /portfolio/ (routes.yaml: template portfolio-index).
+      Mirrors the six-card grid on the static hub so the whole platform routes through
+      rootdrifter.io after Stage 1. Cards link to the Ghost-hosted project pages. --}}
+<div class="container">
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="{{@site.url}}/">rootdrifter.io</a><span class="sep">/</span><span aria-current="page">portfolio</span>
+  </nav>
+
+  <div class="sys-label">// portfolio — six projects, one methodology</div>
+  <h1>Portfolio</h1>
+  <p>Build and break with the same discipline, documented to a standard a reviewer can audit.
+  Two living platform builds, two complete offensive/research works, applied-ML security research,
+  and ongoing methodology-first CTF practice.</p>
+
+  <div class="project-grid">
+
+    <a class="project-card" href="{{@site.url}}/portfolio/ironveil/" style="--glow:#00e5ff">
+      <div class="card-top">
+        <span class="card-name">IRONVEIL</span>
+        <span class="card-status st-living">Living Build</span>
+      </div>
+      <p class="card-desc">Hardened Fedora workstation built to a defence-in-depth threat model:
+      LUKS2 full-disk encryption unlocked by a FIDO2 hardware key, remote pre-boot SSH unlock,
+      and all DNS filtered before it leaves the host.</p>
+      <div class="card-metric">FIDO2 hardware-key disk unlock &middot; 6-layer defence in depth</div>
+      <div class="card-tags">
+        <span>LUKS2</span><span>Nitrokey FIDO2</span><span>dracut-sshd</span><span>WireGuard</span><span>AdGuard Home</span>
+      </div>
+      <span class="card-cta">VIEW PROJECT &#8594;</span>
+    </a>
+
+    <a class="project-card" href="{{@site.url}}/portfolio/nullbyte/" style="--glow:#00e87a">
+      <div class="card-top">
+        <span class="card-name">NULLBYTE</span>
+        <span class="card-status st-living">Living Build</span>
+      </div>
+      <p class="card-desc">GrapheneOS mobile platform on a Pixel 10 Pro Fold: nine independently
+      encrypted user profiles as compartmentalised trust boundaries, verified boot from a hardware
+      root of trust, per-app network policy.</p>
+      <div class="card-metric">9-profile mobile security architecture &middot; Titan M2 verified boot</div>
+      <div class="card-tags">
+        <span>GrapheneOS</span><span>Titan M2</span><span>RethinkDNS</span><span>Termux</span><span>WireGuard</span>
+      </div>
+      <span class="card-cta">VIEW PROJECT &#8594;</span>
+    </a>
+
+    <a class="project-card" href="{{@site.url}}/portfolio/spectre/" style="--glow:#ff3b3b">
+      <div class="card-top">
+        <span class="card-name">SPECTRE</span>
+        <span class="card-status st-complete">Complete</span>
+      </div>
+      <p class="card-desc">Grey-box penetration test of an Apache 2.4.58 host, run from a
+      self-hardened PostgreSQL server built to CIS Level 1. PTES-aligned methodology with findings
+      mapped to CWE, CIS, and ISO/IEC 27002.</p>
+      <div class="card-metric">7 findings &middot; SHA-256 evidence chain &middot; PTES methodology</div>
+      <div class="card-tags">
+        <span>nmap</span><span>Gobuster</span><span>Nikto</span><span>LinPEAS</span><span>CIS Benchmarks</span>
+      </div>
+      <span class="card-cta">VIEW PROJECT &#8594;</span>
+    </a>
+
+    <a class="project-card" href="{{@site.url}}/portfolio/oracle/" style="--glow:#7c6fff">
+      <div class="card-top">
+        <span class="card-name">ORACLE</span>
+        <span class="card-status st-complete">Complete</span>
+      </div>
+      <p class="card-desc">Applied ML research with a security-relevant method: leakage-free image
+      classification under class imbalance — the same discipline that governs rare-attack-class
+      detection in intrusion detection pipelines.</p>
+      <div class="card-metric">93.97% from-scratch CNN vs 99.11% pretrained ResNet-18</div>
+      <div class="card-tags">
+        <span>PyTorch</span><span>CNN</span><span>ResNet-18</span><span>t-SNE</span><span>scikit-learn</span>
+      </div>
+      <span class="card-cta">VIEW PROJECT &#8594;</span>
+    </a>
+
+    <a class="project-card" href="{{@site.url}}/portfolio/mirage/" style="--glow:#00c8b4">
+      <div class="card-top">
+        <span class="card-name">MIRAGE</span>
+        <span class="card-status st-complete">Complete</span>
+      </div>
+      <p class="card-desc">Dissertation research: can frontier LLMs reason causally about social
+      engineering, or only pattern-match its surface? Causal-discovery DAGs validated with DoWhy
+      refutation, four frontier models benchmarked against them.</p>
+      <div class="card-metric">88,647-email phishing corpus &middot; ICC 0.98 rating reliability</div>
+      <div class="card-tags">
+        <span>DoWhy</span><span>causal DAGs</span><span>CVAE</span><span>4 frontier LLMs</span>
+      </div>
+      <span class="card-cta">VIEW PROJECT &#8594;</span>
+    </a>
+
+    <a class="project-card" href="{{@site.url}}/portfolio/gauntlet/" style="--glow:#00e87a">
+      <div class="card-top">
+        <span class="card-name">GAUNTLET</span>
+        <span class="card-status st-active">Active</span>
+      </div>
+      <p class="card-desc">Methodology-first CTF practice on TryHackMe and HackTheBox: structured
+      entries covering reconnaissance to root, with failure paths documented and every technique
+      mapped to MITRE ATT&amp;CK.</p>
+      <div class="card-metric">7 methodology entries &middot; MITRE ATT&amp;CK mapped</div>
+      <div class="card-tags">
+        <span>TryHackMe</span><span>HackTheBox</span><span>MITRE ATT&amp;CK</span><span>PTES</span>
+      </div>
+      <span class="card-cta">VIEW PROJECT &#8594;</span>
+    </a>
+
+    {{!-- WATCHTOWER card joins when the repo goes public:
+    <div class="project-card coming" style="--glow:#ffaa00" aria-disabled="true">
+      <div class="card-top">
+        <span class="card-name">WATCHTOWER</span>
+        <span class="card-status st-build">In Build</span>
+      </div>
+      <p class="card-desc">Self-hosted Wazuh SIEM home lab with ten MITRE ATT&CK-mapped detection
+      scenarios that re-use the gauntlet attack techniques as the detections.</p>
+      <div class="card-metric">10 ATT&CK detection scenarios &middot; MTTD/MTTR goals</div>
+      <span class="card-cta">COMING SOON</span>
+    </div>
+    --}}
+
+  </div>
+
+  <p><a href="{{@site.url}}/blog/">&#8592; Blog</a></p>
+
+</div>

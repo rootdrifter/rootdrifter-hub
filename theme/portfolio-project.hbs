@@ -1,0 +1,37 @@
+{{!< default}}
+{{!-- Individual project spec page — bound by routes.yaml (data: page.portfolio-<name>).
+      The page content (markdown) carries the migrated spec; the design system CSS styles the
+      components; the matching interactive component JS self-mounts into
+      <div id="<project>-component"> provided by the content. --}}
+{{#page}}
+<article class="container">
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="{{@site.url}}/">rootdrifter.io</a><span class="sep">/</span><a href="{{@site.url}}/portfolio/">portfolio</a><span class="sep">/</span><span aria-current="page">{{slug}}</span>
+  </nav>
+
+  <header class="post-header">
+    <h1>{{title}}</h1>
+    {{#if custom_excerpt}}<p class="hero-sub">{{custom_excerpt}}</p>{{/if}}
+  </header>
+
+  <div class="post-content portfolio-content">
+    {{content}}
+  </div>
+
+  <footer class="post-footer">
+    <nav class="post-nav" aria-label="Portfolio">
+      <a href="{{@site.url}}/portfolio/">&#8592; All projects</a>
+      <a href="{{@site.url}}/blog/">Blog &#8594;</a>
+    </nav>
+  </footer>
+
+</article>
+
+{{#match slug "portfolio-ironveil"}}<script defer src="{{asset "js/ironveil-checklist.js"}}"></script>{{/match}}
+{{#match slug "portfolio-nullbyte"}}<script defer src="{{asset "js/nullbyte-matrix.js"}}"></script>{{/match}}
+{{#match slug "portfolio-spectre"}}<script defer src="{{asset "js/spectre-timeline.js"}}"></script>{{/match}}
+{{#match slug "portfolio-oracle"}}<script defer src="{{asset "js/oracle-chart.js"}}"></script>{{/match}}
+{{#match slug "portfolio-mirage"}}<script defer src="{{asset "js/mirage-stepper.js"}}"></script>{{/match}}
+{{#match slug "portfolio-gauntlet"}}<script defer src="{{asset "js/gauntlet-radar.js"}}"></script>{{/match}}
+{{/page}}
