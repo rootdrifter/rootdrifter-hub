@@ -16,7 +16,7 @@
 - Internal daemon/profile names or hierarchy references
 - Real hostnames, VPN IPs, DNS upstreams
 - Key fingerprints, SSH key comments tied to identity
-- Real email addresses, passmail aliases, wallet addresses
+- Real email addresses, disposable/forwarding email aliases, wallet addresses
 - LUKS UUIDs, boot hashes, crypttab/dracut/WireGuard real values
 - Any cross-compartment opsec or monetisation infrastructure
 - Real name, university name, employer names from CV
