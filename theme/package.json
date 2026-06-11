@@ -20,6 +20,36 @@
       "m": {"width": 600},
       "l": {"width": 1200},
       "xl": {"width": 2000}
+    },
+    "custom": {
+      "github_url": {
+        "type": "text",
+        "default": "https://github.com/rootdrifter"
+      },
+      "portfolio_url": {
+        "type": "text",
+        "default": "https://rootdrifter.github.io"
+      },
+      "show_toc": {
+        "type": "boolean",
+        "default": true
+      },
+      "show_reading_time": {
+        "type": "boolean",
+        "default": true
+      },
+      "hero_tagline_1": {
+        "type": "text",
+        "default": "Security-cleared. Deployable from day one."
+      },
+      "hero_tagline_2": {
+        "type": "text",
+        "default": "Cleared professional. No vetting delay."
+      },
+      "hero_tagline_3": {
+        "type": "text",
+        "default": "Building toward cleared security roles."
+      }
     }
   }
 }
