@@ -1,0 +1,15 @@
+{{!-- Email subscription — only renders when Ghost membership is enabled.
+      Uses Ghost's native members form (data-members-form="subscribe"). --}}
+{{#if @site.members_enabled}}
+<aside class="info-block subscribe" aria-label="Subscribe by email">
+  <span class="blk-label">// subscribe</span>
+  <p>Get new posts by email. No noise — only when something worth reading goes up.</p>
+  <form data-members-form="subscribe" class="subscribe-form">
+    <label class="subscribe-label" for="subscribe-email" style="position:absolute;left:-9999px">Email address</label>
+    <input id="subscribe-email" data-members-email type="email" required autocomplete="email"
+           placeholder="you@example.com" class="subscribe-input">
+    <button type="submit" class="subscribe-btn">Subscribe</button>
+  </form>
+  <p class="subscribe-msg" data-members-error></p>
+</aside>
+{{/if}}

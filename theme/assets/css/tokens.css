@@ -24,7 +24,7 @@
 
   /* Layout */
   --max-width: 900px;
-  --nav-height: 48px;
+  --nav-height: 40px;   /* matches the static site nav (rootdrifter.github.io) exactly */
 
   /* Extended tokens (design-system parity with the static hub) */
   --surface2:      #101a28;

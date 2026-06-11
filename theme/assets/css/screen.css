@@ -132,8 +132,9 @@ p { margin-bottom: 1rem; }
 /* ---------- status tags ---------- */
 .status-row { display: flex; gap: 0.7rem; flex-wrap: wrap; margin: 1.2rem 0; }
 .status-tag {
-  font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.18em;
-  text-transform: uppercase; padding: 0.3em 0.8em; border: 1px solid; white-space: nowrap;
+  /* exact parity with the static site .status-pill */
+  font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.2em;
+  text-transform: uppercase; padding: 0.32em 0.85em; border: 1px solid; white-space: nowrap;
 }
 .st-cleared  { color: var(--green);  border-color: var(--green); }
 .st-active   { color: var(--accent); border-color: var(--accent); }
@@ -154,6 +155,26 @@ p { margin-bottom: 1rem; }
 .info-block .blk-label { color: var(--accent); }
 .warn-block .blk-label { color: var(--warn); }
 
+/* ---------- subscribe (members) ---------- */
+.subscribe { margin: 2rem 0; }
+.subscribe p { font-size: 0.92rem; margin-bottom: 0.8rem; }
+.subscribe-form { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.subscribe-input {
+  flex: 1; min-width: 200px;
+  background: var(--code-bg); border: 1px solid var(--border-bright); color: var(--text);
+  font-family: var(--font-mono); font-size: 0.8rem; padding: 0.55rem 0.8rem;
+}
+.subscribe-input::placeholder { color: var(--muted); }
+.subscribe-input:focus-visible { border-color: var(--accent); outline: none; }
+.subscribe-btn {
+  font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 0.55rem 1.1rem; border: 1px solid var(--accent); background: transparent; color: var(--accent);
+  cursor: pointer; transition: background 0.15s, color 0.15s;
+}
+.subscribe-btn:hover { background: var(--accent); color: var(--bg); }
+.subscribe-msg { font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); margin: 0.6rem 0 0; min-height: 1em; }
+.subscribe-msg[data-members-error] { color: var(--accent2); }
+
 /* ---------- code ---------- */
 :where(.post-content, .page-content) code {
   font-family: var(--font-mono); font-size: 0.88em; color: var(--accent);
@@ -168,7 +189,9 @@ pre {
 pre code { color: var(--green); background: none; padding: 0; font-size: inherit; }
 
 /* ---------- hero ---------- */
-.hero { position: relative; padding: 4rem 0 2.5rem; border-bottom: 1px solid var(--border); }
+.hero { position: relative; padding: 4rem 0 2.5rem; border-bottom: 1px solid var(--border); overflow: hidden; }
+.hero .container { position: relative; z-index: 2; }
+#rain { position: absolute; inset: 0; opacity: 0.10; pointer-events: none; z-index: 0; }
 .hero h1 .slash { color: var(--accent2); font-weight: 300; margin: 0 0.15em; }
 .hero-sub {
   font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);
@@ -292,10 +315,20 @@ pre code { color: var(--green); background: none; padding: 0; font-size: inherit
   .container { padding: 2rem 1.25rem; }
 }
 
+/* ---------- colour scheme ---------- */
+@media (prefers-color-scheme: light) {
+  /* Site is dark-first and intentionally stays dark.
+     No light-mode override — the terminal aesthetic is the design. */
+}
+
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { animation: none !important; transition: none !important; }
+  *, *::before, *::after {
+    animation: none !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ---------- print ---------- */

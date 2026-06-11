@@ -4,6 +4,7 @@
 {{!-- ====================== HOMEPAGE — practitioner's calling card ====================== --}}
 
 <header class="hero">
+  <canvas id="rain" aria-hidden="true"></canvas>
   <div class="container">
     <div class="sys-label">// rootdrifter — security practitioner</div>
     <h1>Root<span class="slash">//</span>Drifter</h1>
@@ -80,6 +81,8 @@
     {{/if}}
   {{/get}}
 
+  {{> subscribe}}
+
   {{!-- ACTIVE WORK --}}
   <div class="section-break"><h2>Active work</h2></div>
   <div class="ops-board">
@@ -125,6 +128,32 @@
       setTimeout(tick, 30);
     }
   })();
+
+  /* hero terminal-rain canvas — parity with the static hub, reduced-motion aware */
+  var canvas = document.getElementById('rain');
+  if (canvas && !reduce) {
+    var ctx = canvas.getContext('2d');
+    var CHARS = '0123456789ABCDEF#$%&>_/\\|', FONT = 14, drops = [], last = 0;
+    function resize() {
+      var hero = canvas.parentElement;
+      canvas.width = hero.clientWidth; canvas.height = hero.clientHeight;
+      var cols = Math.floor(canvas.width / FONT); drops = [];
+      for (var i = 0; i < cols; i++) drops.push(Math.random() * canvas.height / FONT);
+    }
+    function draw(ts) {
+      requestAnimationFrame(draw);
+      if (document.hidden || ts - last < 66) return;  /* ~15fps drift */
+      last = ts;
+      ctx.fillStyle = 'rgba(9,13,18,0.18)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00e5ff'; ctx.font = FONT + "px 'Share Tech Mono', monospace";
+      for (var i = 0; i < drops.length; i++) {
+        ctx.fillText(CHARS.charAt(Math.floor(Math.random() * CHARS.length)), i * FONT, drops[i] * FONT);
+        if (drops[i] * FONT > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i] += 0.5;
+      }
+    }
+    resize(); window.addEventListener('resize', resize); requestAnimationFrame(draw);
+  }
 })();
 </script>
 
