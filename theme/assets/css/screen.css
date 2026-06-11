@@ -183,6 +183,22 @@ p { margin-bottom: 1rem; }
 .subscribe-form.success ~ .subscribe-err { display: none; }
 
 /* ---------- code ---------- */
+.code-wrap { position: relative; }
+.code-wrap pre { overflow-x: auto; }
+.code-copy {
+  position: absolute; top: 0.4rem; right: 0.4rem;
+  font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.12em;
+  padding: 0.22rem 0.5rem; border: 1px solid var(--border-bright); background: var(--bg);
+  color: var(--muted); cursor: pointer; opacity: 0;
+  transition: opacity 0.15s, color 0.15s, border-color 0.15s;
+}
+.code-wrap:hover .code-copy, .code-copy:focus-visible { opacity: 1; }
+.code-copy:hover { color: var(--accent); border-color: var(--accent); }
+.code-lang {
+  position: absolute; top: 0.45rem; right: 3.6rem;
+  font-family: var(--font-mono); font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); opacity: 0.65; pointer-events: none;
+}
 :where(.post-content, .page-content) code {
   font-family: var(--font-mono); font-size: 0.88em; color: var(--accent);
   background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 2px;

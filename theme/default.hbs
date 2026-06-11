@@ -61,6 +61,28 @@
       window.addEventListener('resize', update);
       update();
     }
+
+    /* code blocks: wrap + language label + copy button (vanilla JS, "COPIED" 2s) */
+    document.querySelectorAll('.post-content pre, .page-content pre').forEach(function (pre) {
+      if (pre.parentElement && pre.parentElement.classList.contains('code-wrap')) return;
+      var wrap = document.createElement('div');
+      wrap.className = 'code-wrap';
+      pre.parentNode.insertBefore(wrap, pre);
+      wrap.appendChild(pre);
+      var code = pre.querySelector('code');
+      var m = code && (code.className || '').match(/language-([\w-]+)/);
+      if (m) { var lbl = document.createElement('span'); lbl.className = 'code-lang'; lbl.textContent = m[1]; wrap.appendChild(lbl); }
+      var btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'code-copy'; btn.textContent = 'COPY';
+      btn.setAttribute('aria-label', 'Copy code to clipboard');
+      btn.addEventListener('click', function () {
+        var text = code ? code.innerText : pre.innerText;
+        (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(function () {
+          btn.textContent = 'COPIED'; setTimeout(function () { btn.textContent = 'COPY'; }, 2000);
+        }).catch(function () { btn.textContent = 'ERR'; setTimeout(function () { btn.textContent = 'COPY'; }, 2000); });
+      });
+      wrap.appendChild(btn);
+    });
   })();
   </script>
 </body>
