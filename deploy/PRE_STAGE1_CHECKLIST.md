@@ -9,8 +9,8 @@ and `SECURITY_CHECKLIST.md` (post-deploy verification).
 - [x] **Hub migration copies synced to confirmed hardware values** — `portfolio-ironveil.md` +
       `ironveil-checklist.js` (wg-CH-FI-2/wg-SE-FI-1, Quad9 DoH, `*:53`, aes-xts-plain64/512-bit,
       dracut-sshd 0.7.1-5.fc44); `portfolio-nullbyte.md` + `nullbyte-matrix.js` (boot hash, Titan M2
-      + Trusty TEE + Tensor G5 core, Android 16/build 2026060601, Ghost not Wraith). **Synced
-      2026-06-11.**
+      + Trusty TEE + Tensor G5 core, Android 16/build 2026060601, corrected third-profile codename
+      to Ghost). **Synced 2026-06-11.**
 - [x] **Six portfolio content pages** present in `content/pages/portfolio-*.md`.
 - [x] **Six interactive components** present in `theme/assets/js/` (checklist, matrix, timeline,
       chart, stepper, radar).
@@ -19,9 +19,9 @@ and `SECURITY_CHECKLIST.md` (post-deploy verification).
 - [x] **Ghost theme gscan: 0 errors** (1 acceptable warning — custom fonts, intentional; the theme
       ships its own typography).
 - [x] **All seven portfolio routes return 200 locally** (`/portfolio/` + six projects).
-- [x] **Privacy scan clean** — 0 hits across the hub (no stale wg-SE-RO-1, no Wraith, no
-      private codenames / key material). "Ghost CMS" (platform) and "Ghost" (profile codename) both
-      legitimately present.
+- [x] **Privacy scan clean** — 0 hits across the hub (no stale tunnel name, no superseded profile
+      codename, no private codenames / key material). "Ghost CMS" (platform) and "Ghost" (profile
+      codename) both legitimately present.
 
 ## Deployment artefacts (agent-doable — done; live test happens in Stage 1)
 
