@@ -19,11 +19,27 @@
   </figure>
   {{/if}}
 
+  {{#has tag="teaser"}}
+  {{!-- Teaser gate: pending-review content renders an 80-word preview behind a gradient
+        cutoff plus the transmission overlay. Removing the "teaser" tag in Ghost admin
+        publishes the full content — see content/APPROVAL_QUEUE.md for the review flow. --}}
+  <div class="post-content post-content-preview">
+    {{content words="80"}}
+  </div>
+  <div class="transmission-overlay">
+    <div class="transmission-label">// TRANSMISSION INCOMING</div>
+    <div class="transmission-sub">{{#if custom_excerpt}}{{custom_excerpt}}{{else}}SIGNAL DETECTED &mdash; FULL CONTENT DECRYPTING{{/if}}</div>
+    <p class="transmission-cta">This transmission is being prepared for deployment.
+    Subscribe to be notified the moment it goes live.</p>
+    {{> subscribe}}
+  </div>
+  {{else}}
   <div class="post-content">
     {{content}}
   </div>
 
   {{> subscribe}}
+  {{/has}}
 
   <footer class="post-footer">
     {{#if tags}}
@@ -36,6 +52,21 @@
       {{#next_post}}<a href="{{url}}">{{title}} &#8594;</a>{{/next_post}}
     </nav>
   </footer>
+
+  {{#has tag="teaser"}}
+  {{else}}
+  {{#if primary_tag}}
+  {{#get "posts" filter="tags:{{primary_tag.slug}}+id:-{{id}}" limit="3" include="tags" as |related|}}
+    {{#if related}}
+    <div class="section-break"><h2>Related</h2></div>
+    <div class="post-feed">
+      {{#foreach related}}{{> post-card}}{{/foreach}}
+    </div>
+    {{/if}}
+  {{/get}}
+  {{/if}}
+  {{#if @custom.show_toc}}<script defer src="{{asset "js/toc.js"}}"></script>{{/if}}
+  {{/has}}
 
 </article>
 {{/post}}

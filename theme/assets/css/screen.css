@@ -162,6 +162,11 @@ p { margin-bottom: 1rem; }
 .subscribe .subscribe-sub { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.9rem; }
 .subscribe .subscribe-note { font-family: var(--font-mono); font-size: 0.62rem; color: var(--muted); margin: 0.7rem 0 0; }
 .subscribe-form { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.subscribe-label {
+  /* screen-reader-only — the placeholder carries the visual hint */
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
 .subscribe-input {
   flex: 1; min-width: 200px;
   background: var(--code-bg); border: 1px solid var(--border-bright); color: var(--text);
@@ -310,6 +315,78 @@ a.pf-item:hover { border-color: var(--accent); transform: translateY(-2px); }
 .post-nav { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
 .post-nav a { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; }
 .back-link { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); display: inline-block; margin-bottom: 1rem; }
+
+/* ---------- teaser gate / transmission overlay ---------- */
+/* Posts tagged "teaser" show an 80-word preview with a gradient cutoff and this overlay.
+   Remove the tag in Ghost admin to publish full content (see content/APPROVAL_QUEUE.md). */
+.post-content-preview {
+  position: relative;
+  max-height: 300px;
+  overflow: hidden;
+}
+.post-content-preview::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent, var(--bg) 80%);
+  pointer-events: none;
+}
+.transmission-overlay {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--border);
+  margin-top: -1rem;
+  position: relative;
+  z-index: 1;
+}
+.transmission-label {
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--green); border: 1px solid var(--green);
+  display: inline-block; padding: 0.5em 1.5em; margin-bottom: 1rem;
+  animation: pulse-border 2s ease-in-out infinite;
+  /* the global prefers-reduced-motion rule below already disables this animation */
+}
+@keyframes pulse-border {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,255,136,0.4); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(0,255,136,0); }
+}
+.transmission-sub {
+  font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted);
+  letter-spacing: 0.15em; margin-bottom: 1.5rem;
+}
+.transmission-cta { font-size: 0.82rem; color: var(--text); margin-bottom: 1.5rem; }
+.transmission-overlay .subscribe { text-align: left; }
+.pc-incoming { font-size: 0.55rem; letter-spacing: 0.15em; padding: 0.2em 0.6em; }
+.transmission-count {
+  font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted);
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+
+/* ---------- table of contents (built by toc.js; 3+ headings, non-teaser posts only) ---------- */
+.toc {
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 0.9rem 1.15rem; margin: 1.25rem 0; font-size: 0.85rem;
+}
+.toc summary {
+  font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--accent); cursor: pointer; list-style: none;
+}
+.toc summary::before { content: '+ '; }
+.toc[open] summary::before { content: '\2212 '; }
+.toc ol { list-style: none; margin: 0.6rem 0 0; }
+.toc li { margin-bottom: 0.3rem; }
+.toc li.toc-h3 { padding-left: 1rem; }
+.toc a { color: var(--muted); }
+.toc a:hover { color: var(--accent); text-decoration: none; }
+@media (min-width: 1201px) {
+  /* desktop: sticky panel floated into the right margin of the narrow article column */
+  .toc {
+    position: sticky; top: calc(var(--nav-height) + 1.5rem);
+    float: right; width: 230px;
+    margin: 0 -262px 1rem 1.5rem;
+  }
+}
 
 /* ---------- pagination ---------- */
 .pagination { display: flex; justify-content: space-between; align-items: center; margin: 2rem 0; font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; }

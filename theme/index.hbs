@@ -25,7 +25,7 @@
     <h1>Root<span class="slash">//</span>Drifter</h1>
     <div class="hero-sub">Hardened systems · offensive methodology · detection engineering</div>
     <p class="typed-line" aria-label="Security-cleared and deployable from day one, with no vetting delay.">
-      <span id="typed"></span><span class="cursor" aria-hidden="true">&#9608;</span>
+      <span id="typed" data-p1="{{@custom.hero_tagline_1}}" data-p2="{{@custom.hero_tagline_2}}" data-p3="{{@custom.hero_tagline_3}}"></span><span class="cursor" aria-hidden="true">&#9608;</span>
     </p>
     <noscript><p class="typed-line">Security-cleared. Deployable from day one — no vetting delay.</p></noscript>
     <div class="status-row">
@@ -34,13 +34,20 @@
       <span class="status-tag st-avail">&#9679; Available</span>
     </div>
     <div class="hero-links">
-      <a class="btn" href="https://rootdrifter.github.io" rel="noopener">View portfolio &#8594;</a>
+      <a class="btn" href="{{@custom.portfolio_url}}" rel="noopener">View portfolio &#8594;</a>
       <a class="btn ghost" href="{{@site.url}}/blog/">Read the blog &#8595;</a>
     </div>
   </div>
 </header>
 
 <div class="container">
+
+  {{!-- PLATFORM STATUS (pre-launch) — remove this block at Stage 1 go-live --}}
+  <div class="info-block" style="margin: 2rem 0;">
+    <span class="blk-label">// platform status</span>
+    Rootdrifter.io is in pre-launch. Content is being prepared and reviewed. Subscribe below to
+    receive immediate access when transmissions go live.
+  </div>
 
   {{!-- ABOUT --}}
   <div class="section-break"><h2>About</h2></div>
@@ -90,6 +97,8 @@
         {{#foreach recent}}{{> post-card}}{{/foreach}}
       </div>
       <p><a href="{{@site.url}}/blog/">All posts &#8594;</a></p>
+      {{!-- hard-coded teaser count — update as posts are reviewed (see content/APPROVAL_QUEUE.md) --}}
+      <p class="transmission-count">3 transmissions in preparation &middot; Subscribe for early access</p>
     {{else}}
       <div class="info-block">
         <span class="blk-label">// blog</span>
@@ -107,6 +116,7 @@
     <div class="ops-row"><span class="ops-tag st-progress">In progress</span> CompTIA Sec+ SY0-701</div>
     <div class="ops-row"><span class="ops-tag st-progress">In progress</span> Wazuh SIEM home lab — detection engineering</div>
     <div class="ops-row"><span class="ops-tag st-active">Active</span> CTF practice — TryHackMe / HackTheBox</div>
+    <div class="ops-row"><span class="ops-tag st-active">Launching</span> rootdrifter.io — content platform, pre-launch phase</div>
     <div class="ops-row"><span class="ops-tag st-avail">Available</span> Cleared entry-level roles — UK / NL / DE</div>
   </div>
 
@@ -127,10 +137,11 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var el = document.getElementById('typed');
   if (!el) return;
+  /* taglines are theme custom settings (Ghost admin → Design), surfaced via data attributes */
   var PHRASES = [
-    'Security-cleared. Deployable from day one.',
-    'Cleared professional. No vetting delay.',
-    'Building toward cleared security roles.'
+    el.getAttribute('data-p1') || 'Security-cleared. Deployable from day one.',
+    el.getAttribute('data-p2') || 'Cleared professional. No vetting delay.',
+    el.getAttribute('data-p3') || 'Building toward cleared security roles.'
   ];
   if (reduce) { el.textContent = PHRASES[0]; return; }
   var p = 0, c = 0, del = false;

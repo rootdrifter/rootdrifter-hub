@@ -2,8 +2,9 @@
 <a class="post-card" href="{{url}}">
   <div class="pc-meta">
     <span>{{date format="DD MMM YYYY"}}</span>
-    {{#if reading_time}}<span>{{reading_time}}</span>{{/if}}
+    {{#if @custom.show_reading_time}}{{#if reading_time}}<span>{{reading_time}}</span>{{/if}}{{/if}}
     {{#primary_tag}}<span>{{name}}</span>{{/primary_tag}}
+    {{#has tag="teaser"}}<span class="status-tag st-progress pc-incoming">INCOMING</span>{{/has}}
   </div>
   <div class="pc-title">{{title}}</div>
   <p class="pc-excerpt">{{excerpt characters="160"}}</p>
