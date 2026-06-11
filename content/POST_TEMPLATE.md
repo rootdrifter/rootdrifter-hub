@@ -25,7 +25,7 @@ section can't be verified, it stays gated.
 - [ ] No real operational values: home IPs, hostnames, live configs, key material
 - [ ] Lab/CTF IPs are room-supplied or RFC 5737/1918 documentation ranges, stated as such
 - [ ] No screenshots containing usernames, paths, or browser chrome with identifying detail
-- [ ] `rootdrifter` spelled with "er" in every link (a `rootdrift` link 404s)
+- [ ] `rootdrifter` spelled in full in every link (dropping the trailing "er" yields a 404)
 
 ## 3. Technical review
 
