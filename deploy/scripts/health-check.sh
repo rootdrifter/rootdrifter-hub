@@ -6,10 +6,19 @@ set -uo pipefail
 
 URL="${1:-http://localhost:2368}"
 EXPECT="${2:-rootdrifter}"
+# RETRIES/DELAY give a just-restarted Ghost time to finish booting before we call it unhealthy
+# (Ghost returns 503 for a few seconds after `ghost restart`). For pure monitoring set RETRIES=1.
+RETRIES="${RETRIES:-6}"
+DELAY="${DELAY:-3}"
 
-code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "$URL/")" || code="000"
+code="000"
+for i in $(seq 1 "$RETRIES"); do
+  code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "$URL/")" || code="000"
+  [ "$code" = "200" ] && break
+  [ "$i" -lt "$RETRIES" ] && sleep "$DELAY"
+done
 if [ "$code" != "200" ]; then
-  echo "UNHEALTHY: $URL returned HTTP $code"
+  echo "UNHEALTHY: $URL returned HTTP $code after $RETRIES attempt(s)"
   exit 1
 fi
 

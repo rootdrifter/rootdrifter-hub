@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#00e5ff">
 
+  {{!-- The theme owns the <title> element — {{ghost_head}} injects meta/OG/canonical but NOT
+        the title. {{meta_title}} resolves to the page/post meta title, falling back to the
+        site title. --}}
+  <title>{{meta_title}}</title>
+
   {{!-- Identity verification (rel=me) — links this site to the public GitHub identity. --}}
   <link rel="me" href="https://github.com/rootdrifter">
 
@@ -15,7 +20,7 @@
   <link rel="stylesheet" type="text/css" href="{{asset "css/tokens.css"}}">
   <link rel="stylesheet" type="text/css" href="{{asset "css/screen.css"}}">
 
-  {{!-- Ghost injects title, meta description, Open Graph, canonical, structured data --}}
+  {{!-- Ghost injects meta description, Open Graph, Twitter, canonical, structured data --}}
   {{ghost_head}}
 </head>
 <body class="{{body_class}}">
