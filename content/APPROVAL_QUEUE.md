@@ -31,6 +31,14 @@ and the `// TRANSMISSION INCOMING` overlay with a subscribe form.
 | nmap: Beyond the Basics | PENDING REVIEW | - | - |
 | CTF Writeup Template 1 | DRAFT | - | Not published — admin pipeline only |
 | CTF Writeup Template 2 | DRAFT | - | Not published — admin pipeline only |
+| WriteUp: Blue — TryHackMe (Windows) | DRAFT | - | From gauntlet stub — publish when the room is completed under account |
+| WriteUp: Kenobi — TryHackMe (Linux) | DRAFT | - | From gauntlet stub — publish when completed |
+| WriteUp: Steel Mountain — TryHackMe (Windows) | DRAFT | - | From gauntlet stub — publish when completed |
+| WriteUp: Alfred — TryHackMe (Windows) | DRAFT | - | From gauntlet stub — publish when completed |
+| WriteUp: Basic Pentesting — TryHackMe (Linux) | DRAFT | - | From gauntlet stub — publish when completed |
+
+Count rule: "transmissions in preparation" on the homepage = published teaser posts + real
+machine-writeup drafts (placeholder templates excluded). Currently 3 + 5 = **8**.
 
 ## Approval criteria
 
