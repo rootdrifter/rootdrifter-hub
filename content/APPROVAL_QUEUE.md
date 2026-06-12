@@ -32,6 +32,8 @@ and the `// TRANSMISSION INCOMING` overlay with a subscribe form.
 | SIEM Alert Fatigue: Why Tuning Matters More Than Rules | DRAFT — READY FOR REVIEW | - | Practitioner post (D4 + Wazuh lab); no operational values |
 | Verified Boot and Secure Elements: What GrapheneOS Gets Right | DRAFT — READY FOR REVIEW | - | nullbyte-grounded; verification workflow explained, hash value NOT included |
 | WireGuard vs OpenVPN: A Practical Comparison | DRAFT — READY FOR REVIEW | - | ironveil-grounded; no endpoints/IPs/tunnel names |
+| The Case for Causal Detection Engineering | PENDING LIVE CREATION | - | mirage-grounded (DoWhy/DAG/adversarial evasion) → SOC + watchtower; body version-controlled, **not yet in Ghost** (Admin-API auth blocked, see deploy/HARDENING-ghost-rate-limit.md) |
+| How CTF Practice Builds Real Security Skills | PENDING LIVE CREATION | - | gauntlet-grounded (methodology + ATT&CK + offence→detection); body version-controlled, **not yet in Ghost** (Admin-API auth blocked) |
 | WriteUp: Blue — TryHackMe (Windows) | DRAFT | - | From gauntlet stub — publish when the room is completed under account |
 | WriteUp: Kenobi — TryHackMe (Linux) | DRAFT | - | From gauntlet stub — publish when completed |
 | WriteUp: Steel Mountain — TryHackMe (Windows) | DRAFT | - | From gauntlet stub — publish when completed |
@@ -43,8 +45,10 @@ and the `// TRANSMISSION INCOMING` overlay with a subscribe form.
 | Sec+ Domain 1: General Security Concepts (study notes) | DRAFT | - | Blog-toned foundations overview; publish when reviewed |
 
 Count rule: "transmissions in preparation" on the homepage = published teaser posts + real
-machine-writeup / study-note / practitioner drafts. Currently 3 published + 12 drafts
-(5 THM + 2 HTB + 2 Sec+ + 3 practitioner) = **15**.
+machine-writeup / study-note / practitioner drafts. Currently **15 live in Ghost** (3 published + 12
+drafts: 5 THM + 2 HTB + 2 Sec+ + 3 practitioner). **+2 practitioner bodies are version-controlled but
+NOT yet created in Ghost** (causal-detection-engineering, ctf-practice-real-skills) — blocked by the
+Admin-API auth issue; create them once the integration is fixed, which will take the count to 17.
 
 > Notes: a Sec+ Domain 2 post is already **published** (teaser-gated), so the Sec+ drafts are
 > Domain 4 (the SOC-critical domain) and Domain 1 (foundations) to avoid duplication. All 7
