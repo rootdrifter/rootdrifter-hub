@@ -8,9 +8,12 @@ For the short ordered go-live list see `ACTIVATION_CHECKLIST.md`; for the DNS re
 > (gitignored). This guide uses `[PLACEHOLDERS]`.
 
 ## 1. Account + sending domain
-- Create a Mailgun account; verify it (Mailgun requires a payment method even on the free tier to send
-  to unverified recipients). Choose the **EU** region if EU data residency matters — it changes the
-  SMTP host to `smtp.eu.mailgun.org` and the API base.
+- Create a Mailgun account at mailgun.com using the project registration email account (the same
+  account used for the other infrastructure providers — kept out of this repo by policy); verify it
+  (Mailgun requires a payment method even on the free tier to send to unverified recipients). The
+  free tier (≈100 emails/day, ~1,000+/month on flex) comfortably covers a low-frequency newsletter.
+- Choose the **EU** region (GDPR-aligned data residency) — it changes the SMTP host to
+  `smtp.eu.mailgun.org` and the API base.
 - Add a **sending domain**: `mg.rootdrifter.io` (a dedicated subdomain protects the apex's reputation).
 
 ## 2. Domain verification (DNS)
@@ -31,6 +34,10 @@ Mailgun → Sending → Domain settings → **SMTP credentials**. Default login 
 
 These go **only** into the server `config.production.json` `mail` block (template:
 `../config.production.template.json`). Never paste them anywhere tracked by git.
+
+**One-command apply:** once the credentials exist, `../scripts/configure-mailgun.sh` writes the
+mail config on the server via `ghost config --mail SMTP` and restarts Ghost — run it locally,
+pass (or be prompted for) the SMTP login + password, then do the admin-UI steps in §4.
 
 ## 4. Ghost integration
 With the `mail` block filled, restart Ghost (`ghost restart`). Then in **Ghost Admin → Settings →
