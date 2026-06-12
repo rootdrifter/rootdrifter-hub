@@ -31,3 +31,18 @@
   --border-bright: #2a3f55;
   --text-bright:   #e8f2fb;
 }
+
+/* Light theme — opt-in via the nav toggle (dark stays the default). Accents are held
+   constant; only the surface/text tokens flip, so every component that uses var(--…)
+   adapts automatically. Parity with rootdrifter.github.io. */
+html.light {
+  --bg:            #f0f4f8;
+  --surface:       #ffffff;
+  --surface2:      #e8eef5;
+  --border:        #d0dce8;
+  --border-bright: #b0c4d6;
+  --text:          #1a2a3a;
+  --text-bright:   #06121f;
+  --muted:         #5a7488;
+  --code-bg:       #e4ecf3;
+}

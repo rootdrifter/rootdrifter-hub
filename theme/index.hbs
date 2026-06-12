@@ -165,7 +165,7 @@
       requestAnimationFrame(draw);
       if (document.hidden || ts - last < 66) return;  /* ~15fps drift */
       last = ts;
-      ctx.fillStyle = 'rgba(9,13,18,0.18)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = document.documentElement.classList.contains('light') ? 'rgba(240,244,248,0.20)' : 'rgba(9,13,18,0.18)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#00e5ff'; ctx.font = FONT + "px 'Share Tech Mono', monospace";
       for (var i = 0; i < drops.length; i++) {
         ctx.fillText(CHARS.charAt(Math.floor(Math.random() * CHARS.length)), i * FONT, drops[i] * FONT);

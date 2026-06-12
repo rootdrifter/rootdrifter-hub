@@ -461,10 +461,23 @@ a.project-card:hover .card-cta { color: var(--glow); }
 }
 
 /* ---------- colour scheme ---------- */
-@media (prefers-color-scheme: light) {
-  /* Site is dark-first and intentionally stays dark.
-     No light-mode override — the terminal aesthetic is the design. */
+/* Dark-first by design (the terminal aesthetic is the default). A manual nav toggle
+   opts into light mode and persists in localStorage; we deliberately do NOT auto-switch
+   on prefers-color-scheme so the dark brand stays the default first impression. */
+html.light body::before {
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.025) 2px, rgba(0,0,0,0.025) 4px);
 }
+html.light h1, html.light h2 { color: var(--text-bright); }
+
+/* theme toggle button (nav) */
+.pnav-theme {
+  background: none; border: 1px solid var(--border); color: var(--muted);
+  font-family: var(--font-mono); font-size: 0.85rem; line-height: 1;
+  width: 26px; height: 26px; border-radius: 3px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-left: 0.4rem; transition: color 0.15s, border-color 0.15s;
+}
+.pnav-theme:hover, .pnav-theme:focus-visible { color: var(--accent); border-color: var(--accent); }
 
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {

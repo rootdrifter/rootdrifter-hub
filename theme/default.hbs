@@ -10,6 +10,9 @@
         site title. --}}
   <title>{{meta_title}}</title>
 
+  {{!-- No-flash theme: apply the saved light preference before first paint (dark default). --}}
+  <script>(function(){try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light');}catch(e){}})();</script>
+
   {{!-- Identity verification (rel=me) — links this site to the public GitHub identity. --}}
   <link rel="me" href="https://github.com/rootdrifter">
 
@@ -53,6 +56,19 @@
         if (e.target.tagName === 'A') { l.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); }
       });
     }
+    /* theme toggle — dark is the default; light persists in localStorage */
+    var themeBtn = document.getElementById('themeToggle');
+    if (themeBtn) {
+      var sync = function () { themeBtn.setAttribute('aria-pressed', document.documentElement.classList.contains('light') ? 'true' : 'false'); };
+      sync();
+      themeBtn.addEventListener('click', function () {
+        var light = document.documentElement.classList.toggle('light');
+        try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch (e) {}
+        sync();
+        window.dispatchEvent(new Event('themechange'));
+      });
+    }
+
     /* scroll reading-progress bar */
     var bar = document.getElementById('scrollProgress');
     if (bar) {
