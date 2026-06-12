@@ -6,6 +6,12 @@ excerpt: FEDORA WORKSTATION · LUKS2 · FIDO2 · WIREGUARD · DRACUT-SSHD · LIV
 
 > **// STATUS — OPERATIONAL · rev 2026-06-12 · LIVING BUILD**
 
+> **// IN PLAIN TERMS** — A hardened workstation isn't paranoia, it's practice: if you're going to
+> advise organisations on security controls, you should be able to run them on your own machine
+> first. The disk is encrypted so a stolen laptop is just scrap metal; the key to open it is a
+> physical token you have to touch; and every choice here has a written reason — *and* a written
+> list of what it still doesn't protect against.
+
 > **// Overview** — Hardened Fedora workstation built to a defence-in-depth security model.
 > LUKS2 full-disk encryption requires physical hardware key presence for unlock. If the key is
 > unavailable, the machine can still be unlocked remotely over SSH from a GrapheneOS mobile

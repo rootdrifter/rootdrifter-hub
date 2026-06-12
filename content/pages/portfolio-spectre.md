@@ -6,6 +6,11 @@ excerpt: APACHE 2.4.58 TARGET · POSTGRESQL 16 DEFENDED · PTES METHODOLOGY · Q
 
 > **// ENGAGEMENT STATUS — COMPLETE · rev 2026-06-12**
 
+> **// IN PLAIN TERMS** — Before you can defend a system, you need to understand how it's attacked.
+> This is a controlled, authorised break-in attempt against a web server, documented to the standard
+> a paid engagement would require — including a tamper-proof evidence trail proving exactly what
+> happened, and the point where I deliberately stopped rather than cross an ethical line.
+
 > **// Overview** — Grey-box penetration test of a peer-supplied Apache 2.4.58 host on Ubuntu
 > 24.04.2 LTS, conducted against a self-hardened PostgreSQL 16 server built to CIS Level 1
 > Benchmark. Full methodology documented: reconnaissance, host enumeration, two exploitation

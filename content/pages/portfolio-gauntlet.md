@@ -6,6 +6,10 @@ excerpt: METHODOLOGY-FIRST · RECONNAISSANCE TO ROOT · ONGOING — UPDATED AS C
 
 > **// ● ACTIVE · rev 2026-06-12** — 11 methodology stubs · TryHackMe + HackTheBox · live / growing
 
+> **// IN PLAIN TERMS** — These are practice break-ins on deliberately vulnerable machines —
+> security's equivalent of a flight simulator. Each one is written up as a *method*, dead ends
+> included, because the repeatable reasoning is what transfers to real work, not the individual trick.
+
 > **// Methodology First — What This Repository Is** — The deliverable here is **method, not
 > flags**. Each entry documents how a target is approached — what was observed, what was
 > inferred, what was tried, what failed, and what worked — because the reasoning is the part

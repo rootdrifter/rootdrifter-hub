@@ -7,6 +7,11 @@ excerpt: GRAPHENEOS · PIXEL 10 PRO FOLD · COMPARTMENTALISED PROFILE ARCHITECTU
 > **// STATUS — OPERATIONAL · rev 2026-06-12 · LIVING BUILD**
 > Device: Pixel 10 Pro Fold · SoC: Tensor G5 · Security chip: Titan M2 · GrapheneOS Android 16 · Profiles: 9
 
+> **// IN PLAIN TERMS** — Most people treat a phone as one trusted container for everything —
+> banking, work, throwaway sign-ups, all mixed together. This one is split into nine sealed
+> compartments, so a bad app or a hijacked account in one can't reach the others. It's the same
+> "contain the breach" principle used to protect organisations, applied to the device in your pocket.
+
 GrapheneOS eliminates the trust compromises baked into stock Android: no Google Play Services
 in the owner profile, no persistent background reporting, **verified boot enforced at every
 power cycle**. On top of the OS security model, this build imposes an additional architectural

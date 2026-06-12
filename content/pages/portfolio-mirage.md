@@ -6,6 +6,11 @@ excerpt: 88,647 PHISHING EMAILS · DAG CONSTRUCTION · DOWHY VALIDATION · 4 FRO
 
 > **// RESEARCH STATUS — COMPLETE · rev 2026-06-12**
 
+> **// IN PLAIN TERMS** — Phishing works by manipulating people — urgency, authority, fear — not
+> just by tripping a spam filter. This research asks whether AI can understand *why* a scam message
+> is convincing, because a detector that grasps the manipulation is far harder for an attacker to
+> slip past than one that only matches suspicious words.
+
 > **// Research Question** — Can a frontier large language model move beyond pattern-matching
 > to reason causally about the psychological mechanisms that drive social engineering success?
 > Not whether an LLM can flag a phishing message — but whether it can explain *why* that message
