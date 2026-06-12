@@ -4,12 +4,12 @@ title: GAUNTLET — CTF Writeups
 excerpt: METHODOLOGY-FIRST · RECONNAISSANCE TO ROOT · ONGOING — UPDATED AS CHALLENGES ARE COMPLETED
 -->
 
-> **// ● ACTIVE · rev 2026-06-10** — 7 methodology stubs · TryHackMe + HackTheBox · live / growing
+> **// ● ACTIVE · rev 2026-06-12** — 11 methodology stubs · TryHackMe + HackTheBox · live / growing
 
 > **// Methodology First — What This Repository Is** — The deliverable here is **method, not
 > flags**. Each entry documents how a target is approached — what was observed, what was
 > inferred, what was tried, what failed, and what worked — because the reasoning is the part
-> that transfers to a real engagement. The current seven entries are **preparation stubs**:
+> that transfers to a real engagement. The current eleven entries are **preparation stubs**:
 > structured from publicly documented information about well-known retired rooms, they capture
 > the attack path and methodology without reproducing live flag values or claiming an original
 > solve. They are study scaffolds that become full writeups as each room is worked under
@@ -39,14 +39,19 @@ signposted. Builds independent methodology.
 | Steel Mountain | THM | Easy | Stub | HFS 2.3 RCE → CVE-2014-6287 → msfvenom shell → PowerUp unquoted service path PE | nmap, metasploit, msfvenom, PowerUp.ps1 |
 | Alfred | THM | Easy | Stub | Jenkins default credentials → Groovy script console RCE → token impersonation | nmap, jenkins, nishang, metasploit |
 | Basic Pentesting | THM | Easy | Stub | SMB enumeration → Samba username disclosure → SSH brute-force → SUID + sudo PE | nmap, enum4linux, hydra, linpeas |
+| Relevant | THM | Medium | Stub | Anonymous SMB share → base64 creds in `passwords.txt` → writable share served by IIS → `.aspx` web shell uploaded over SMB / executed over HTTP → SeImpersonatePrivilege → SYSTEM | nmap, smbclient, PrintSpoofer/RoguePotato |
+| Skynet | THM | Easy | Stub | Anonymous SMB password list → SquirrelMail login → Samba password in inbox → hidden Cuppa CMS → RFI → www-data → tar wildcard checkpoint injection in a root cron → root | nmap, enum4linux, smbclient, cuppa RFI |
 | Lame | HTB | Easy | Stub | Samba 3.0.20 username-map command injection (CVE-2007-2447) → direct root; vsftpd banner ruled out as a rabbit hole | nmap, enum4linux, smbclient, metasploit |
 | Jerry | HTB | Easy | Stub | Tomcat Manager default credentials → malicious WAR deploy → JSP shell as NT AUTHORITY\SYSTEM | nmap, whatweb, msfvenom, curl |
+| Bashed | HTB | Easy | Stub | phpbash web shell left reachable under `/dev/` → www-data (no exploit) → `sudo -l` to scriptmanager → writable script run by a root cron → root | nmap, gobuster, phpbash, linpeas |
+| Beep | HTB | Easy | Stub | Elastix vtigerCRM `graph.php` LFI → `/etc/amportal.conf` discloses admin password → password reused on root SSH → root (canonical LFI → cred disclosure → reuse chain) | nmap, curl, LFI, ssh |
 
-> **// Active — More Writeups Loading** — This index grows as challenges are completed. Seven
-> structured stubs are in place (five TryHackMe, two HackTheBox); pending additions include
-> TryHackMe rooms (RootMe, Ice, Lian Yu) and further HackTheBox machines (Legacy, Devel). Each
+> **// Active — More Writeups Loading** — This index grows as challenges are completed. Eleven
+> structured stubs are in place (seven TryHackMe, four HackTheBox); pending additions include
+> further TryHackMe rooms (RootMe, Ice, Lian Yu) and HackTheBox machines (Legacy, Devel). Each
 > writeup follows the methodology template in README — from initial recon to root, with failure
-> paths documented alongside successes.
+> paths documented alongside successes, plus a box-specific Wazuh detection rule bridging each
+> machine to the watchtower SIEM lab.
 
 ---
 
@@ -54,11 +59,11 @@ signposted. Builds independent methodology.
 
 <div id="gauntlet-component" aria-label="Radar chart of CTF category coverage"></div>
 
-| Category | Score (/5) | What the seven stubs actually cover |
+| Category | Score (/5) | What the eleven stubs actually cover |
 |----------|------------|-------------------------------------|
-| NETWORK | 4 | SMB/NFS enumeration and exploitation across four machines (Blue, Kenobi, Basic Pentesting, Lame). |
-| PRIVESC | 3.5 | SUID, sudo abuse, unquoted service paths, token impersonation. |
-| WEB | 3 | Jenkins console RCE, HFS CVE-2014-6287, Tomcat WAR deploy. |
+| NETWORK | 4 | SMB/NFS enumeration and exploitation across six machines (Blue, Kenobi, Basic Pentesting, Lame, Skynet, Relevant). |
+| PRIVESC | 3.5 | SUID, sudo abuse, unquoted service paths, token impersonation (SeImpersonate), and writable-cron escalation (Bashed, Skynet). |
+| WEB | 3.5 | Jenkins console RCE, HFS CVE-2014-6287, Tomcat WAR deploy, RFI (Skynet/Cuppa), LFI → credential disclosure (Beep), and an `.aspx` upload-to-execute chain (Relevant). |
 | CRYPTO | 1 | Hash dumping and cracking only (hashdump → john/hashcat). |
 | FORENSICS | 0.5 | Evidence-logging discipline, no dedicated forensics challenges yet. |
 | PWN | 0.5 | Tooling familiarity (gdb, ghidra); no completed binary-exploitation writeups yet. |

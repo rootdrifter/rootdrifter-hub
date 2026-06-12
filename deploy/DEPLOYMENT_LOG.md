@@ -93,3 +93,31 @@ active; auto-updates on.
   (`deploy/mailgun/`), then put the SMTP creds in `config.production.json` (never commit) and
   `ghost restart` for transactional email (member magic-links / newsletters).
 - **Ghost admin:** Email newsletter → from: rootdrifter; review + de-tease posts when ready.
+
+---
+
+## 2026-06-12 — Email live (Resend), Admin API restored, egress incident
+
+- **Admin API restored.** The operator recreated the custom integration ("Claude Code") and
+  rotated the Admin API key — authenticated endpoints return 200 again (the prior 403 was the
+  orphaned-integration issue). The dangling admin `api_keys` row left behind by the deleted old
+  integration was removed (DB backup taken first: `ghost.db.bak-20260612-173147`).
+- **Email is live on Resend SMTP** — `smtp.resend.com:587`, STARTTLS, `secure: false` as a JSON
+  **boolean** (the string `"false"` breaks sends — documented in `scripts/configure-resend.sh`).
+  Verified end-to-end via the subscribe magic-link (201, ~1.6 s, no mail errors). Mailgun guides
+  superseded; test procedure in `EMAIL_TEST.md`.
+- **Subscribe flow complete:** form → magic link → signup → `/welcome/` ("// TRANSMISSION
+  RECEIVED", Free-tier `welcome_page_url`). Newsletter renamed "rootdrifter updates", sender
+  "rootdrifter". Timezone fixed `Etc/UTC` → `Europe/London` (DB write + restart; settings PUT
+  is 403 for integration tokens).
+- **INCIDENT — egress block + health-check restart loop (resolved on-box, operator action
+  open).** From 16:31 UTC the box could not reach anything outbound except 587/465 (443/80/53-tcp
+  all timed out; UFW clean — the block is at the **Hetzner cloud-firewall level**, likely from
+  the Resend setup). The cron health check probed `https://rootdrifter.io/` *through Cloudflare*,
+  got `000`, and **restarted a healthy Ghost every 5 minutes for ~70 min** (brief 502 window each
+  cycle). Fix: the health check now probes **loopback through nginx**
+  (`--resolve rootdrifter.io:443:127.0.0.1`), validating nginx + TLS + Ghost without leaving the
+  box. Old script kept as `health-check.sh.bak-egress-incident`. Loop confirmed stopped.
+  **OPERATOR ACTION (time-sensitive): open the Hetzner Cloud Firewall egress** — at minimum
+  outbound TCP 443 + 80 (ACME cert renewal before 2026-09-08, apt/unattended-upgrades, Ghost
+  update checks) and outbound DNS. Until then, certificate renewal and security updates FAIL.

@@ -1,5 +1,11 @@
 # Mailgun Activation Checklist — rootdrifter.io newsletter / member email
 
+> **SUPERSEDED (2026-06-12):** production email runs on **Resend SMTP**
+> (`smtp.resend.com:587`, `secure: false` as a JSON boolean — see
+> `../scripts/configure-resend.sh` and `../EMAIL_TEST.md`). This Mailgun guide is
+> retained for reference only; do not follow it for the live site.
+
+
 Ghost needs a transactional email provider to send member magic-links and newsletters. The dev
 instance runs `mail.transport: "Direct"` (best-effort, no auth) which is fine for local testing but
 **not** deliverable in production. This checklist turns on real email via Mailgun. Do it once the

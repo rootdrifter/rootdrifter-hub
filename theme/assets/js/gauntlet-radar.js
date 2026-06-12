@@ -10,7 +10,7 @@
 
   /* [label, score out of 5, label anchor] — axes clockwise from the top */
   var AXES = [
-    ['WEB', 3, 'middle'],
+    ['WEB', 3.5, 'middle'],
     ['NETWORK', 4, 'start'],
     ['CRYPTO', 1, 'start'],
     ['FORENSICS', 0.5, 'middle'],

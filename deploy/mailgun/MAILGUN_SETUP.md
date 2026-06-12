@@ -1,5 +1,11 @@
 # Mailgun Setup — transactional email for rootdrifter.io
 
+> **SUPERSEDED (2026-06-12):** production email runs on **Resend SMTP**
+> (`smtp.resend.com:587`, `secure: false` as a JSON boolean — see
+> `../scripts/configure-resend.sh` and `../EMAIL_TEST.md`). This Mailgun guide is
+> retained for reference only; do not follow it for the live site.
+
+
 Full provider walkthrough for wiring Mailgun into Ghost so member magic-links and newsletters deliver.
 For the short ordered go-live list see `ACTIVATION_CHECKLIST.md`; for the DNS records see
 `../cloudflare/DNS_SETUP.md`.

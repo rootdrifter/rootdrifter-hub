@@ -118,8 +118,9 @@ deploy/
   scripts/backup-ghost.sh            # timestamped tar.gz of content/ (db, images, themes) + retention prune
   scripts/health-check.sh            # HTTP 200 + <title> assertion (cron/monitoring-friendly)
   cloudflare/DNS_SETUP.md            # interim Pages + production VPS records, email DNS, CF settings, zero-downtime cutover
-  mailgun/MAILGUN_SETUP.md           # full email provider walkthrough
-  mailgun/ACTIVATION_CHECKLIST.md    # short ordered go-live run-list
+  scripts/configure-resend.sh        # wire Ghost to Resend SMTP (boolean secure:false gotcha documented)
+  EMAIL_TEST.md                      # verified end-to-end email test procedure (Resend)
+  mailgun/                           # superseded Mailgun guides (Resend is live; kept for reference)
 ```
 
 **`config.production.json` keys** (template in `deploy/config.production.template.json`):
@@ -129,14 +130,14 @@ deploy/
 | `url` | Public canonical URL — `https://rootdrifter.io`. Ghost builds every link from this. |
 | `server.host` / `server.port` | `127.0.0.1:2368` — loopback only; Nginx is the sole public listener. |
 | `database.client` / `.connection.filename` | `sqlite3` + the prod DB path under `content/data/`. |
-| `mail.transport` / `.options` | `SMTP` via Mailgun; `auth.user`/`auth.pass` are `[PLACEHOLDERS]`, filled on the box only. |
+| `mail.transport` / `.options` | `SMTP` via **Resend** (`smtp.resend.com:587`, `secure: false` as a JSON **boolean**); `auth.pass` is the API key, filled on the box only. |
 | `mail.from` | Default sender — `rootdrifter <hello@rootdrifter.io>`. |
 | `logging.level` / `.transports` | `info`, to file + stdout (systemd journal). |
 | `process` | `systemd` — Ghost-CLI manages the service. |
 | `paths.contentPath` | Absolute path to `content/` (themes, images, data, settings). |
 
 **Go-live order:** `setup-vps.sh` (provision) → fill `config.production.json` → `ghost install`/start →
-Nginx + `certbot` → `deploy-theme.sh` → `MAILGUN_SETUP.md` → `DNS_SETUP.md` cutover → `health-check.sh`.
+Nginx + `certbot` → `deploy-theme.sh` → `configure-resend.sh` → `DNS_SETUP.md` cutover → `health-check.sh`.
 The human checklist is the section below.
 
 ## Manual actions required before going live
@@ -146,7 +147,7 @@ The human checklist is the section below.
 3. **Create the `rootdrifter-hub` repo on GitHub** and push (`rootdrifter/rootdrifter-hub`).
 4. **Provision a Hetzner CX22 VPS** (or equivalent) and install Ghost in production mode.
 5. **Configure DNS** — point the `rootdrifter.io` A record at the VPS IP once it is live.
-6. **Set up Mailgun** for Ghost's transactional + member email sends.
+6. **Set up Resend** for Ghost's transactional + member email sends (`configure-resend.sh`). _Done 2026-06-12._
 7. **Configure `hello@rootdrifter.io` routing** (e.g. via Cloudflare Email Routing) to a real inbox.
 
 > Until all seven are done, `rootdrifter.io` does not resolve and must **not** be linked from the

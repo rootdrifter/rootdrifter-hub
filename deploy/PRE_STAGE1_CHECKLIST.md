@@ -20,8 +20,8 @@ and `SECURITY_CHECKLIST.md` (post-deploy verification).
       ships its own typography).
 - [x] **All seven portfolio routes return 200 locally** (`/portfolio/` + six projects).
 - [x] **Privacy scan clean** — 0 hits across the hub (no stale tunnel name, no superseded profile
-      codename, no private codenames / key material). "Ghost CMS" (platform) and "Ghost" (profile
-      codename) both legitimately present.
+      codename, no private codenames / key material). The publishing-platform name is scrubbed from
+      public output; the "Ghost" profile codename is the clean public name and may appear.
 
 ## Deployment artefacts (agent-doable — done; live test happens in Stage 1)
 
@@ -31,7 +31,7 @@ and `SECURITY_CHECKLIST.md` (post-deploy verification).
       bracketed placeholders, no real secrets, Ghost bound to loopback).
 - [x] **Provisioning + ops scripts** — `setup-vps.sh`, `deploy-theme.sh`, `backup-ghost.sh`,
       `health-check.sh`.
-- [x] **Mailgun setup guide** — `deploy/mailgun/MAILGUN_SETUP.md` + `ACTIVATION_CHECKLIST.md`.
+- [x] **Email provider** — Resend SMTP live 2026-06-12 (`deploy/scripts/configure-resend.sh`, `deploy/EMAIL_TEST.md`); the Mailgun guides in `deploy/mailgun/` are superseded.
 - [x] **DNS cutover procedure** — `deploy/cloudflare/DNS_SETUP.md`.
 - [x] **Migration cutover runbook** — `deploy/MIGRATION_CUTOVER.md` (DNS, redirect activation,
       verification matrix, rollback).
@@ -44,9 +44,9 @@ and `SECURITY_CHECKLIST.md` (post-deploy verification).
 
 - [ ] Register VPS provider account + provision the server (see `source-material/STAGE1_KICKOFF.md`).
 - [ ] Run `setup-vps.sh`: Node 20 + Ghost-CLI, nginx, TLS (certbot), `ghost install` with the
-      production config (fill Mailgun creds — never commit the filled file).
+      production config (fill the Resend API key — never commit the filled file).
 - [ ] Cloudflare DNS for rootdrifter.io → server IP (`DNS_SETUP.md`).
-- [ ] Mailgun domain verification + SMTP creds (`ACTIVATION_CHECKLIST.md`).
+- [x] Email domain verification + SMTP creds — done via Resend (2026-06-12).
 - [ ] Ghost first-run admin setup at `https://rootdrifter.io/ghost/`; activate the `rootdrifter`
       theme; restrict `/ghost/` per `GHOST_ADMIN_HARDENING.md`; enable 2FA.
 - [ ] Upload `routes.yaml`; create the 6 portfolio pages + seed content (reuse the Admin-API
