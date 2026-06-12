@@ -43,3 +43,7 @@ collections:
 
 taxonomies:
   tag: /tag/{slug}/
+  # author archive re-enabled (2026-06-13): with author omitted, Ghost computes every author URL —
+  # and the JSON-LD Article `author.url` on /about/ — as {site}/404/. Re-enabling it makes the author
+  # entity valid (theme has no author.hbs → falls back to index.hbs post-list branch, renders fine).
+  author: /author/{slug}/

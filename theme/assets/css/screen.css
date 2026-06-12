@@ -363,6 +363,22 @@ a.pf-item:hover { border-color: var(--accent); transform: translateY(-2px); }
   letter-spacing: 0.12em; text-transform: uppercase;
 }
 
+/* ---------- homepage: civilian on-ramp + manifesto strip (declare, don't present) ---------- */
+.civilian-lede {
+  font-family: var(--font-mono); font-size: 0.75rem; color: var(--green);
+  letter-spacing: 0.1em; margin-bottom: 1rem;
+}
+.civilian-lede a { color: var(--green); text-decoration: underline; }
+.civilian-lede a:hover { color: var(--accent); }
+.manifesto-strip {
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 1rem 0; margin: 2rem 0;
+}
+.manifesto-text {
+  font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted);
+  letter-spacing: 0.05em; text-align: center; margin: 0;
+}
+
 /* ---------- table of contents (built by toc.js; 3+ headings, non-teaser posts only) ---------- */
 .toc {
   background: var(--surface); border: 1px solid var(--border);

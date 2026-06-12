@@ -2,6 +2,16 @@
 
 {{#is "home"}}
 {{!-- ====================== HOMEPAGE — practitioner's calling card ====================== --}}
+<!--
+  flag{w3lc0me_t0_r00tdrift3r}
+
+  You found the first flag. You're already thinking like a security professional.
+  Viewing source to find hidden information is one of the first things any security
+  researcher does — congratulations.
+
+  Submit: hello@rootdrifter.io  ·  Subject: Challenge 0 — [your handle]
+  More challenges: https://rootdrifter.io/challenges/
+-->{{!-- CTF Challenge 0 (view-source flag) — homepage only; HTML comment, invisible in render --}}
 
 <script type="application/ld+json">
 {
@@ -12,7 +22,8 @@
   "description": "Security-cleared practitioner — offensive methodology, systems hardening, detection engineering.",
   "url": "{{@site.url}}",
   "sameAs": [
-    "https://github.com/rootdrifter"
+    "https://github.com/rootdrifter",
+    "https://rootdrifter.io"
   ]
 }
 </script>
@@ -40,6 +51,12 @@
 </header>
 
 <div class="container">
+
+  {{!-- CIVILIAN ON-RAMP + MANIFESTO STRIP (declare, don't present — above the portfolio) --}}
+  <p class="civilian-lede">Not technical? <a href="{{@site.url}}/start/">Start here &#8594;</a></p>
+  <div class="manifesto-strip">
+    <p class="manifesto-text">Security knowledge is a right, not a product. rootdrifter is building in public to prove it.</p>
+  </div>
 
   {{!-- ABOUT --}}
   <div class="section-break"><h2>About</h2></div>
@@ -90,7 +107,7 @@
       </div>
       <p><a href="{{@site.url}}/blog/">All posts &#8594;</a></p>
       {{!-- hard-coded teaser count — update as posts are reviewed (see content/APPROVAL_QUEUE.md) --}}
-      <p class="transmission-count">12 transmissions in preparation &middot; Subscribe for early access</p>
+      <p class="transmission-count">More transmissions incoming &middot; Subscribe for early access</p>
     {{else}}
       <div class="info-block">
         <span class="blk-label">// blog</span>
