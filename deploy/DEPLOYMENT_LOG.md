@@ -58,26 +58,38 @@ SSL works (origin 443 with the LE cert), so the effective mode is Full/Full-stri
 - Origin `:443` → 200. Ghost `:2368` external → blocked.
 - Ports listening: 22, 80, 443 (public) + 127.0.0.1:2368 (loopback).
 
-### IMPORTANT — current served state
-The production Ghost is a **fresh install**: the **default Casper theme is active** (the rootdrifter
-theme files are deployed but not yet activated) and **no content is imported** (so `/portfolio/`
-and project pages currently 404/400). `https://rootdrifter.io/ghost/` shows the **first-run setup
-screen**.
+## S1 go-live — COMPLETE (2026-06-12)
 
-### Operator actions to complete go-live (Ghost first-run — cannot be automated)
-1. Visit `https://rootdrifter.io/ghost/` → create the owner account (your email + password) →
-   **enable 2FA**. (The admin credentials are yours to set; I did not create the account.)
-2. Settings → Design → activate the **rootdrifter** theme.
-3. Settings → Membership → enable members; Email newsletter → from: rootdrifter.
-4. Import content: either re-run the page/post creation scripts against production (preferred —
-   recreates the 6 portfolio pages + 12 posts from `content/`), or import a Ghost export. Provide an
-   Admin API integration key and this can be scripted.
-5. Cloudflare dashboard: confirm SSL/TLS = **Full (strict)**; Always Use HTTPS on; email routing for
-   `hello@rootdrifter.io`. Mailgun for transactional email (`deploy/mailgun/`).
+**Ghost first-run (operator):** owner account created, **rootdrifter theme activated**, members
+enabled.
 
-### HELD — GitHub Pages redirect cutover (S1-03)
-**Not activated.** `rootdrifter.io` returns 200, but it currently serves the empty default Ghost.
-Activating the redirects now would point the live recruiter-facing portfolio at an empty "Ghost"
-page. The cutover should run **only after** the theme is activated and the portfolio pages are
-imported (so `/portfolio/...` serve 200). This honours the migration's intent, not just the literal
-200-check.
+**Content migrated to production (via Admin API):** 6 portfolio pages + about/contact + **12 posts**
+(3 published + 9 content drafts) copied from the local dev Ghost — preserving the corrected hardware
+values (ironveil wg-CH-FI-2/Quad9/aes-xts; nullbyte Ghost-not-Wraith/boot-hash/Titan M2). The 2
+placeholder templates + Ghost's default "coming soon" were intentionally not migrated. All
+`/portfolio/...`, `/blog/`, `/about/`, `/contact/` routes verified **200 through Cloudflare**, theme
+confirmed active (not Casper).
+> Migration note: Cloudflare returned error 1010 for the default Python-urllib User-Agent — the
+> migration client sets a normal UA to pass CF bot detection.
+
+**GitHub Pages redirect cutover (S1-03) — ACTIVATED.** All 7 redirects live (verified by serving the
+meta-refresh content — curl does not follow client-side redirects):
+`rootdrifter.github.io/` → `rootdrifter.io`; each `rootdrifter.github.io/<project>/` →
+`rootdrifter.io/portfolio/<project>/`. Per-project redirects replace each project repo's
+`docs/index.html` (the hub-subdir approach in the directive would have been shadowed by the project
+repos' own Pages). Originals preserved in git history (rollback = `git revert`).
+
+**S1-04 hardening pass:** logrotate for Ghost logs (`su ghost ghost`, copytruncate, 14-day);
+`server_tokens off`; performance baseline (`deploy/PERFORMANCE_BASELINE.md` — sub-400ms via CF);
+monthly maintenance checklist (`deploy/MONTHLY_MAINTENANCE.md`). Security audit: ports 22/80/443 +
+loopback 2368/53 only; **fail2ban actively banning** (5 IPs banned, real SSH attacks blocked); UFW
+active; auto-updates on.
+
+### Remaining operator actions (dashboard-only — cannot be automated)
+- **Cloudflare:** confirm SSL/TLS = **Full (strict)**, Always Use HTTPS on; enable Brotli / Auto
+  Minify / HTTP/3 (optional perf); set up **Email Routing** for `hello@rootdrifter.io`; add
+  **Web Analytics**.
+- **Mailgun:** create account, verify domain, add the SPF/DKIM/DMARC DNS records
+  (`deploy/mailgun/`), then put the SMTP creds in `config.production.json` (never commit) and
+  `ghost restart` for transactional email (member magic-links / newsletters).
+- **Ghost admin:** Email newsletter → from: rootdrifter; review + de-tease posts when ready.
