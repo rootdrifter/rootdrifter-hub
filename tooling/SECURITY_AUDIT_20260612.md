@@ -3,8 +3,8 @@
 Forensic sweep of all 11 public repositories, the production site, git history, and the
 production server configuration. Method: extended-pattern content scan (credential material,
 private-key blocks, cloud access keys, the private demonology codename set, the superseded
-`Wraith` codename, the `rootdrift`-without-`er` typo, private-repo/file references, real-name
-fragments, and the operator's private email address), run against tracked files, rendered
+profile codename, the org-handle typo (the handle missing its trailing letters), private-repo/file
+references, real-name fragments, and the operator's private email address), run against tracked files, rendered
 production HTML, and full `--all` git history.
 
 ## Executive Summary
@@ -37,13 +37,14 @@ None.
 None.
 
 ### Low / Informational
-- **L1 — the noun "passmail" in `rootdrifter-hub` git history.** Three historical commit diffs
-  (audit/checklist docs, e.g. the pre-production audit) contain the word `passmail` as a
-  *meta-reference* — the scan checklists literally list "scan for: passmail" as a to-do item.
-  This is the scanner documenting itself, not a leaked address. **The operator's actual private
-  email address (`…@passmail.net`) was never committed to any repo** (verified by history scan
-  for the address fragment — zero hits). Current tracked files contain zero `passmail` hits (the
-  meta-references were reworded in a prior session, commit `5bf8a42`). Removing the word from
+- **L1 — the private mail-provider domain name appears in `rootdrifter-hub` git history.** Three
+  historical commit diffs (audit/checklist docs, e.g. the pre-production audit) contain the
+  provider-domain word as a *meta-reference* — the scan checklists list it as a pattern-to-scan-for
+  to-do item. This is the scanner documenting itself, not a leaked address. **The operator's actual
+  private email address (the full `local-part@provider` form) was never committed to any repo**
+  (verified by a history scan for the address fragment — zero hits). Current tracked files contain
+  zero hits for the provider word (the meta-references were reworded in a prior session, commit
+  `5bf8a42`). Removing the word from
   history would require a history rewrite + force-push of a public repo; per standing policy
   (`CLAUDE.md` §7, prior sessions) this is **deferred to explicit operator authorization** and is
   not recommended for a benign common noun. **Risk: negligible.**
@@ -64,14 +65,15 @@ None.
 
 ## Actions Taken
 - Verified (did not need to change): zero credential/key/private-email exposure across tracked
-  files, history, and production; origin IP absent from all public files; daemon codename set and
-  `Wraith` at zero raw hits; `rootdrift`-typo at zero; private-repo references at zero.
+  files, history, and production; origin IP absent from all public files; the daemon codename set and
+  the superseded profile codename at zero raw hits; the org-handle typo at zero; private-repo
+  references at zero.
 - No fixes were required this session — the surface was already clean (the prior session's
   nullbyte threat-model privacy fix and the standing scan discipline are holding).
 
 ## Remaining Items (operator)
 - **O1 egress** — open Hetzner outbound 443/80/53 (time-relevant for cert renewal + patching).
-- **L1 history** — optional, not recommended: a history rewrite to scrub the benign `passmail`
+- **L1 history** — optional, not recommended: a history rewrite to scrub the benign mail-provider
   noun from old commit diffs. Defer unless there is a specific reason; the private address is not
   involved.
 
