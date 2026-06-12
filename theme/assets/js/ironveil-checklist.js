@@ -1,7 +1,7 @@
 /* IRONVEIL hardening checklist — interactive component for the Ghost portfolio page.
    Self-contained: injects scoped styles, builds from embedded data (verbatim from the static
    spec page), mounts into #ironveil-component and hides the static fallback table that
-   follows it in the page content. Data parity: ironveil/docs/index.html rev 2026-06-10. */
+   follows it in the page content. Data parity: ironveil/README.md rev 2026-06-12. */
 (function () {
   'use strict';
   var mount = document.getElementById('ironveil-component');
@@ -30,11 +30,14 @@
       name: '<strong>Build platform</strong> — Fedora 44, kernel 7.0.11-200.fc44.x86_64',
       body: 'Reproducibility and auditability of the build: the exact Fedora release and kernel the workstation was built and verified on (2026-06-11).' },
     { tag: 'Verified', pending: false,
-      name: '<strong>OpenRGB (Razer + Corsair)</strong> — vendor daemons absent',
-      body: 'Vendor cloud-daemon telemetry and unnecessary supply-chain surface: Razer Synapse and iCUE are not installed; peripherals are managed locally as USB HID devices.' },
-    { tag: 'Pending', pending: true,
-      name: '<strong>SELinux/seccomp status</strong> — run: <code>getenforce &amp;&amp; sestatus</code>',
-      body: 'Enforcement state is reported only as measured on the host, never assumed — not captured in the 2026-06-11 hardware session.' },
+      name: '<strong>OpenRGB (Razer + Corsair)</strong> — vendor daemons absent (udev <code>60-openrgb.rules</code>)',
+      body: 'Vendor cloud-daemon telemetry and unnecessary supply-chain surface: Razer Synapse and iCUE are not installed; peripherals are managed locally as USB HID devices with a confirmed non-root udev access rule.' },
+    { tag: 'Verified', pending: false,
+      name: '<strong>SELinux</strong> — Enforcing, <code>targeted</code> policy (measured 2026-06-12)',
+      body: 'Post-exploitation lateral movement: mandatory access control above DAC, deliberately left enforcing rather than disabled. seccomp BPF filtering is compiled into the kernel (<code>CONFIG_SECCOMP_FILTER=y</code>) for systemd service sandboxing. Yama ptrace_scope is at the Fedora default 0 — tightening to 1 is planned and documented as an honest gap.' },
+    { tag: 'Gap', pending: true,
+      name: '<strong>UEFI Secure Boot</strong> — disabled / Setup Mode (honest gap, FUTURE WORK)',
+      body: 'Boot-chain integrity. The build’s unlock-integrity guarantee currently rests on LUKS2 + touch-only FIDO2 + a pinned initramfs host key, not on Secure Boot. Secure Boot enrolment + TPM2 PCR sealing are tracked as future work to close the evil-maid gap — documented honestly rather than hidden.' },
     { tag: 'Pending', pending: true,
       name: '<strong>LUKS2 unlock-latency benchmark</strong> — hardware key vs passphrase unlock time',
       body: 'A usability data point for the hardware-key decision: to be measured, not estimated.' }

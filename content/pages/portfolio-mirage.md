@@ -4,7 +4,7 @@ title: MIRAGE — LLM Causal Inference Research
 excerpt: 88,647 PHISHING EMAILS · DAG CONSTRUCTION · DOWHY VALIDATION · 4 FRONTIER LLMS · ICC 0.98
 -->
 
-> **// RESEARCH STATUS — COMPLETE · rev 2026-06-10**
+> **// RESEARCH STATUS — COMPLETE · rev 2026-06-12**
 
 > **// Research Question** — Can a frontier large language model move beyond pattern-matching
 > to reason causally about the psychological mechanisms that drive social engineering success?
@@ -199,6 +199,38 @@ The open question is whether today's LLMs can actually do this reasoning. The be
 honestly: **GPT-4 reproduced 94.2%** of the validated causal structure; the weakest model
 (**DeepSeek-67B, 53.0%**) reverted to correlational description — i.e. it would be evadable in
 exactly the way above. Causal robustness is only as strong as the reasoner implementing it.
+
+---
+
+## From Research to Deployment — how a SOC would use this
+
+The evasion-resistance argument is the *why*; this is the *how* — the path from a research DAG
+to an enrichment layer on a production email gateway, framed deliberately as
+detection-engineering work, not a paper:
+
+1. **Build the causal graph on *your* baseline** — re-run the discovery pipeline over the
+   organisation's own confirmed-phishing and confirmed-legitimate mail. The constructs
+   generalise; the *edge strengths* should reflect the adversaries that org actually faces.
+2. **Train the DoWhy estimator on historical labelled mail** — analyst dispositions, sandbox
+   results and user reports become ground truth, and DoWhy's refutation tests become a
+   *deployment gate*: an edge that fails refutation on local data does not ship.
+3. **Deploy as an enrichment layer, never a sole block-decision** — each message gets a causal
+   confidence score plus the constructs that fired ("high Authority + Urgency, mediated by
+   Deception"), augmenting the incumbent filter and failing open to the existing control.
+4. **Make alerts explainable, not binary** — the analyst sees *which causal levers* a message
+   pulls. A message scoring high on durable causal structure deserves attention even when its
+   surface looks novel — precisely the case a correlational filter misses.
+5. **Tune on analyst feedback in a closed loop** — because the model keys on causal structure
+   rather than surface tokens, it drifts far more slowly than a keyword model; retraining is
+   correction, not constant catch-up.
+
+> **// Connection to the detection lab** — This is the same discipline applied hands-on in the
+> watchtower Wazuh SIEM home lab: reasoning about *why* a technique works in order to write the
+> detection for it. A correlational rule keyed on a surface indicator — a specific string, a
+> hash, an IP — is the SIEM equivalent of the brittle phishing filter above, cheap for an
+> adversary to evade. The durable detection keys on the *mechanism* the attacker cannot remove
+> without abandoning the attack — the Pyramid of Pain in operational form. Causal thinking here
+> and detection engineering there are the same skill pointed at two problems.
 
 ---
 

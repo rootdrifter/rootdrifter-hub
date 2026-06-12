@@ -4,7 +4,7 @@ title: NULLBYTE — GrapheneOS Mobile Platform
 excerpt: GRAPHENEOS · PIXEL 10 PRO FOLD · COMPARTMENTALISED PROFILE ARCHITECTURE · LIVING BUILD
 -->
 
-> **// STATUS — OPERATIONAL · rev 2026-06-11 · LIVING BUILD**
+> **// STATUS — OPERATIONAL · rev 2026-06-12 · LIVING BUILD**
 > Device: Pixel 10 Pro Fold · SoC: Tensor G5 · Security chip: Titan M2 · GrapheneOS Android 16 · Profiles: 9
 
 GrapheneOS eliminates the trust compromises baked into stock Android: no Google Play Services
@@ -53,7 +53,17 @@ sequence from the handset.
 > **// Verified-boot key hash (confirmed)** —
 > `6836b3c55f753af0a70daafbc4cc6c06fdfe0fca8634e1f7db12e9e10fbd5613` — the fingerprint of the
 > verified-boot key signing this device's GrapheneOS build, independently verifiable against the
-> GrapheneOS release signing keys to confirm the build is authentic and unmodified.
+> GrapheneOS release signing keys published at `grapheneos.org/releases` to confirm the build is
+> authentic and unmodified. Shown on the yellow-state boot screen and via
+> `getprop ro.boot.vbmeta.digest`.
+
+> **// What a mismatch would mean** — The point of the hash is not that it matches today — it is
+> that a mismatch is *detectable*. If this value did not match the published GrapheneOS signing
+> key, it would indicate either a different OS version than expected or, the case that matters, a
+> build that was **not signed by the GrapheneOS project** — a substituted or tampered OS. Because
+> any silent post-installation modification of the OS partition necessarily changes this value, an
+> evil-maid attacker cannot alter the system without the change surfacing at the next boot. That
+> detectability is the security property; the specific hash is just how it is observed.
 
 - Per-profile encryption — independent key per profile
 - Sandboxed Google Play — no system-level privileges
@@ -109,6 +119,11 @@ malicious app, a phishing foothold, a sandboxed-service zero-day — stops at th
 > (pentesting) has broadest network access but no access to financial or professional data —
 > compromise of this profile yields no sensitive personal material. Plague and Ghost are
 > designed to be expendable — deleted and recreated without loss of value.
+
+A full per-profile [threat model](https://github.com/rootdrifter/nullbyte/blob/main/threat-model.md)
+documents, for each of the nine profiles, the threat it counters, the blast radius if it is
+compromised, the data at risk, and the controls in place — plus the device-wide threats (theft,
+coercion, baseband) and an honest residual-risk statement.
 
 ---
 

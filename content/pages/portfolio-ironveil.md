@@ -4,7 +4,7 @@ title: IRONVEIL — Hardened Fedora Workstation
 excerpt: FEDORA WORKSTATION · LUKS2 · FIDO2 · WIREGUARD · DRACUT-SSHD · LIVING BUILD
 -->
 
-> **// STATUS — OPERATIONAL · rev 2026-06-11 · LIVING BUILD**
+> **// STATUS — OPERATIONAL · rev 2026-06-12 · LIVING BUILD**
 
 > **// Overview** — Hardened Fedora workstation built to a defence-in-depth security model.
 > LUKS2 full-disk encryption requires physical hardware key presence for unlock. If the key is
@@ -14,8 +14,9 @@ excerpt: FEDORA WORKSTATION · LUKS2 · FIDO2 · WIREGUARD · DRACUT-SSHD · LIV
 > the host.
 
 > **// Living Build** — An actively maintained workstation build. The core hardware values were
-> captured and verified on 2026-06-11; a couple of secondary items (unlock-latency benchmark,
-> SELinux/seccomp status) remain pending and are labelled as such below.
+> captured and verified on 2026-06-11; SELinux/seccomp status has since been measured and
+> resolved (2026-06-12). Remaining honest gaps (unlock-latency benchmark; UEFI Secure Boot) are
+> labelled as such below — an honest gap beats invented completeness.
 
 ---
 
@@ -48,6 +49,13 @@ Encrypted volume: LUKS2 container UUID `6cbc50ba-6f8a-4932-abfc-f2d0504a29b3`, m
 The FIDO2 slots derive their key with the Nitrokey credential; the passphrase is never sent to the
 key. `crypttab` references the volume by UUID with `discard,x-initrd.attach,fido2-device=auto`.
 
+**Why this slot design:** the three slots split *availability* from *security*. Losing the
+primary Nitrokey is an inconvenience (activate the offline backup), not a lockout — and no
+single artefact unlocks the disk without either physical key presence or the offline
+passphrase. Argon2id on the passphrase slot is deliberate: it is memory-hard, so an attacker
+who clones the disk cannot parallelise guessing on GPUs/ASICs the way they could against a
+fast KDF.
+
 ### Nitrokey 3A NFC — FIDO2 Hardware Key
 
 Hardware: Nitrokey 3A NFC · Firmware: 1.8.3 · **Two tokens enrolled** · Enrollment mode:
@@ -66,6 +74,13 @@ initramfs — reachability comes from the LAN the pre-boot interface sits on bei
 tailnet) → the embedded ed25519 public key authenticates (host key pinned on the client) →
 `systemd-tty-ask-password-agent` drives the unlock, a Nitrokey present at the machine is touched,
 and boot continues. Built on **Fedora 44, kernel `7.0.11-200.fc44.x86_64`**.
+
+**Why this design:** the unlock secret is only ever carried inside an encrypted SSH session
+from a trusted, hardware-attested device — the initramfs never trusts a password over the
+network. Completing the unlock requires the physical GrapheneOS handset *and* its Termux key
+file (two separate things-you-have); an attacker with network access but not the handset
+cannot complete the unlock, and the pinned host key defeats MITM substitution of the pre-boot
+listener.
 
 ### WireGuard VPN — wg-CH-FI-2 and wg-SE-FI-1
 
@@ -108,6 +123,18 @@ iCUE). No vendor software installed. Commander Pro detected as USB HID device.
 | Network | WireGuard `wg-CH-FI-2` / `wg-SE-FI-1` (NetworkManager, manual), full-tunnel routing | Traffic interception, geolocation, leakage if tunnel drops |
 | DNS | AdGuard Home on `*:53` → Quad9 DoH over the active tunnel; systemd-resolved forwards to it | Plaintext DNS leakage; tracker and malicious domain resolution |
 
+### Host Hardening — MAC, seccomp, boot integrity
+
+Above the disk and network layers, the host runs **SELinux in `enforcing`/`targeted` mode**
+(deliberately not disabled), with **seccomp BPF filtering compiled into the kernel**
+(`CONFIG_SECCOMP_FILTER=y`) for systemd service sandboxing. Two controls are documented as
+**honest gaps** rather than hidden: Yama `ptrace_scope` is at the Fedora default `0`
+(tightening to `1` is planned), and **UEFI Secure Boot is currently disabled / in Setup Mode**
+— the build's unlock-integrity guarantee rests on LUKS2 + touch-only FIDO2 + a pinned
+initramfs host key, not on Secure Boot. The current build also does not bind the LUKS unlock
+to TPM PCR measurements; Secure Boot enrolment + TPM2 PCR sealing are tracked as FUTURE WORK
+to close the evil-maid gap.
+
 ---
 
 ## Hardening Checklist — Component Status
@@ -123,12 +150,14 @@ iCUE). No vendor software installed. Commander Pro detected as USB HID device.
 | Verified | AdGuard Home DNS filtering — Quad9 DoH upstream, `*:53`, AdGuard DNS filter | Plaintext DNS leakage; tracker / malicious-domain resolution |
 | Verified | systemd-resolved → 127.0.0.1 (stub listener off) | Applications bypassing the DNS filter |
 | Verified | Build platform — Fedora 44, kernel 7.0.11-200.fc44.x86_64 | Reproducibility / auditability of the build |
-| Verified | OpenRGB (Razer + Corsair) — vendor daemons absent | Vendor cloud-daemon telemetry; unnecessary supply-chain surface |
-| **PENDING** | SELinux/seccomp status — `getenforce && sestatus` | Reported only as measured on the host, never assumed |
+| Verified | OpenRGB (Razer + Corsair) — vendor daemons absent (udev `60-openrgb.rules`) | Vendor cloud-daemon telemetry; unnecessary supply-chain surface |
+| Verified | SELinux — Enforcing, `targeted` policy (measured, not assumed) | Post-exploitation lateral movement; mandatory access control above DAC |
+| Verified | seccomp — `CONFIG_SECCOMP_FILTER=y` (systemd service sandboxing) | Kernel attack surface from compromised services |
+| **GAP** | UEFI Secure Boot — disabled / Setup Mode (honest gap, FUTURE WORK) | Boot-chain integrity; planned with TPM2 PCR sealing to close the evil-maid gap |
 | **PENDING** | LUKS2 unlock-latency benchmark — hardware key vs passphrase | A usability data point to be measured, not estimated |
 
-> **PENDING** — the two items above are secondary values not captured in the 2026-06-11 hardware
-> session (see the repo's `MANUAL_INPUTS.md`). An honest gap beats invented completeness.
+> **PENDING / GAP** — labelled honestly rather than hidden (see the repo's `MANUAL_INPUTS.md`
+> and `hardening/os-hardening.md`). An honest gap beats invented completeness.
 
 ---
 
