@@ -26,11 +26,12 @@ and the `// TRANSMISSION INCOMING` overlay with a subscribe form.
 
 | Post | Status | Reviewed | Notes |
 |------|--------|----------|-------|
-| Enumeration Methodology Framework | PENDING REVIEW | - | - |
-| Sec+ Domain 2: Threats | PENDING REVIEW | - | - |
-| nmap: Beyond the Basics | PENDING REVIEW | - | - |
-| CTF Writeup Template 1 | DRAFT | - | Not published — admin pipeline only |
-| CTF Writeup Template 2 | DRAFT | - | Not published — admin pipeline only |
+| Enumeration Methodology Framework | PENDING REVIEW | - | Published, teaser-gated |
+| Sec+ Domain 2: Threats | PENDING REVIEW | - | Published, teaser-gated |
+| nmap: Beyond the Basics | PENDING REVIEW | - | Published, teaser-gated |
+| SIEM Alert Fatigue: Why Tuning Matters More Than Rules | DRAFT — READY FOR REVIEW | - | Practitioner post (D4 + Wazuh lab); no operational values |
+| Verified Boot and Secure Elements: What GrapheneOS Gets Right | DRAFT — READY FOR REVIEW | - | nullbyte-grounded; verification workflow explained, hash value NOT included |
+| WireGuard vs OpenVPN: A Practical Comparison | DRAFT — READY FOR REVIEW | - | ironveil-grounded; no endpoints/IPs/tunnel names |
 | WriteUp: Blue — TryHackMe (Windows) | DRAFT | - | From gauntlet stub — publish when the room is completed under account |
 | WriteUp: Kenobi — TryHackMe (Linux) | DRAFT | - | From gauntlet stub — publish when completed |
 | WriteUp: Steel Mountain — TryHackMe (Windows) | DRAFT | - | From gauntlet stub — publish when completed |
@@ -42,12 +43,15 @@ and the `// TRANSMISSION INCOMING` overlay with a subscribe form.
 | Sec+ Domain 1: General Security Concepts (study notes) | DRAFT | - | Blog-toned foundations overview; publish when reviewed |
 
 Count rule: "transmissions in preparation" on the homepage = published teaser posts + real
-machine-writeup / study-note drafts (placeholder templates excluded). Currently 3 published + 9
-drafts (5 THM + 2 HTB + 2 Sec+) = **12**.
+machine-writeup / study-note / practitioner drafts. Currently 3 published + 12 drafts
+(5 THM + 2 HTB + 2 Sec+ + 3 practitioner) = **15**.
 
-> Note: a Sec+ Domain 2 post is already **published** (teaser-gated), so the new Sec+ drafts are
+> Notes: a Sec+ Domain 2 post is already **published** (teaser-gated), so the Sec+ drafts are
 > Domain 4 (the SOC-critical domain) and Domain 1 (foundations) to avoid duplication. All 7
-> gauntlet stubs now have draft posts (5 THM + 2 HTB).
+> gauntlet stubs have draft posts (5 THM + 2 HTB). The 3 practitioner drafts (2026-06-12) are
+> the strongest de-tease candidates after review — written for working practitioners, not exam
+> candidates, and grounded in the portfolio projects. The two placeholder CTF templates were
+> removed from the queue (never in production; POST_TEMPLATE.md covers the format).
 
 ## Approval criteria
 
