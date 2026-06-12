@@ -12,8 +12,7 @@
   "description": "Security-cleared practitioner — offensive methodology, systems hardening, detection engineering.",
   "url": "{{@site.url}}",
   "sameAs": [
-    "https://github.com/rootdrifter",
-    "https://rootdrifter.github.io"
+    "https://github.com/rootdrifter"
   ]
 }
 </script>
@@ -34,20 +33,13 @@
       <span class="status-tag st-avail">&#9679; Available</span>
     </div>
     <div class="hero-links">
-      <a class="btn" href="{{@custom.portfolio_url}}" rel="noopener">View portfolio &#8594;</a>
+      <a class="btn" href="{{@site.url}}/portfolio/">View portfolio &#8594;</a>
       <a class="btn ghost" href="{{@site.url}}/blog/">Read the blog &#8595;</a>
     </div>
   </div>
 </header>
 
 <div class="container">
-
-  {{!-- PLATFORM STATUS (pre-launch) — remove this block at Stage 1 go-live --}}
-  <div class="info-block" style="margin: 2rem 0;">
-    <span class="blk-label">// platform status</span>
-    Rootdrifter.io is in pre-launch. Content is being prepared and reviewed. Subscribe below to
-    receive immediate access when transmissions go live.
-  </div>
 
   {{!-- ABOUT --}}
   <div class="section-break"><h2>About</h2></div>
@@ -61,33 +53,33 @@
   into whether language models can reason causally about social engineering rather than just pattern-match
   it. Current focus: CompTIA Security+, active CTF practice, and a Wazuh SIEM home lab for hands-on
   detection engineering.</p>
-  <p>Academic background: a First Class BSc in Computer Networks &amp; Cyber Security from
-  [UNIVERSITY]. Named CV available on request — this site stays pseudonymous by design. ([YOUR NAME]
-  on a formal application.)</p>
+  <p>Academic background: a First Class BSc in Computer Networks &amp; Cyber Security. This site
+  stays pseudonymous by design — a named CV with full academic and contact detail is available on
+  request.</p>
 
   {{!-- PORTFOLIO STRIP --}}
   <div class="section-break"><h2>Portfolio</h2></div>
   <div class="pf-strip">
-    <a class="pf-item" href="https://rootdrifter.github.io/ironveil/" rel="noopener">
+    <a class="pf-item" href="{{@site.url}}/portfolio/ironveil/">
       <span class="pf-kind">ironveil · defensive</span>
       <p>Hardened Fedora workstation — LUKS2 full-disk encryption unlocked by a FIDO2 hardware key,
       remote pre-boot SSH unlock, and all DNS filtered before it leaves the host.</p>
       <span class="pf-metric">3-keyslot LUKS2 · Nitrokey 3A NFC · WireGuard egress</span>
     </a>
-    <a class="pf-item" href="https://rootdrifter.github.io/spectre/" rel="noopener">
+    <a class="pf-item" href="{{@site.url}}/portfolio/spectre/">
       <span class="pf-kind">spectre · offensive</span>
       <p>Grey-box pentest of an Apache 2.4.58 host from a CIS-L1 PostgreSQL server — PTES, findings
       mapped to CWE / CIS / ISO&nbsp;27002, SHA-256 evidence chain.</p>
       <span class="pf-metric">7 findings · primary CWE-548 · SHA-256 chain</span>
     </a>
-    <a class="pf-item" href="https://rootdrifter.github.io/mirage/" rel="noopener">
+    <a class="pf-item" href="{{@site.url}}/portfolio/mirage/">
       <span class="pf-kind">mirage · research</span>
       <p>Causal LLM evaluation over an 88,647-email phishing corpus — can frontier models reason about
       social engineering, or only pattern-match it?</p>
       <span class="pf-metric">88,647 emails · ICC 0.98 · GPT-4 94.2% DAG</span>
     </a>
   </div>
-  <p><a href="https://rootdrifter.github.io" rel="noopener"><strong>Full portfolio &#8594;&nbsp;&nbsp;rootdrifter.github.io</strong></a></p>
+  <p><a href="{{@site.url}}/portfolio/"><strong>Full portfolio &#8594;&nbsp;&nbsp;all six projects</strong></a></p>
 
   {{!-- LATEST WRITING --}}
   <div class="section-break"><h2>Latest writing</h2></div>
@@ -116,7 +108,7 @@
     <div class="ops-row"><span class="ops-tag st-progress">In progress</span> CompTIA Sec+ SY0-701</div>
     <div class="ops-row"><span class="ops-tag st-progress">In progress</span> Wazuh SIEM home lab — detection engineering</div>
     <div class="ops-row"><span class="ops-tag st-active">Active</span> CTF practice — TryHackMe / HackTheBox</div>
-    <div class="ops-row"><span class="ops-tag st-active">Launching</span> rootdrifter.io — content platform, pre-launch phase</div>
+    <div class="ops-row"><span class="ops-tag st-active">Live</span> rootdrifter.io — content platform, publishing progressively</div>
     <div class="ops-row"><span class="ops-tag st-avail">Available</span> Cleared entry-level roles — UK / NL / DE</div>
   </div>
 
