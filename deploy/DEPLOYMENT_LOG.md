@@ -65,7 +65,7 @@ enabled.
 
 **Content migrated to production (via Admin API):** 6 portfolio pages + about/contact + **12 posts**
 (3 published + 9 content drafts) copied from the local dev Ghost — preserving the corrected hardware
-values (ironveil wg-CH-FI-2/Quad9/aes-xts; nullbyte Ghost-not-Wraith/boot-hash/Titan M2). The 2
+values (ironveil wg-CH-FI-2/Quad9/aes-xts; nullbyte corrected third-profile codename/boot-hash/Titan M2). The 2
 placeholder templates + Ghost's default "coming soon" were intentionally not migrated. All
 `/portfolio/...`, `/blog/`, `/about/`, `/contact/` routes verified **200 through Cloudflare**, theme
 confirmed active (not Casper).
