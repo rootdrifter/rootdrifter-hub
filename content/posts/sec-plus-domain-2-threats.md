@@ -107,4 +107,4 @@ The defensive toolkit the exam expects you to apply to a scenario:
 This domain underpins the offensive work in the portfolio: the [pentest methodology](/blog/) writeups
 exercise 2.4 (recognising the attacker's own indicators) and the SIEM-lab detection content exercises
 2.5 from the defender's side. The full, deeper notes for all five domains are in the `sec-plus-notes`
-repo on the [portfolio](https://rootdrifter.github.io).
+repo on the [portfolio](https://rootdrifter.io/portfolio/).
