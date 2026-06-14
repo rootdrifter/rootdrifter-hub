@@ -85,7 +85,7 @@ img { max-width: 100%; height: auto; display: block; }
   font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em;
   padding: 0.15rem 0.55rem; cursor: pointer;
 }
-@media (max-width: 768px) {
+@media (max-width: 900px) {  /* collapse nav to hamburger below ~900px: 8 items + brand overflow the tiny fixed-height row */
   .pnav-toggle { display: block; }
   .pnav-links {
     display: none;

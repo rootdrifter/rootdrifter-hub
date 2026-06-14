@@ -16,6 +16,7 @@ routes:
   /subscribe/:
     template: subscribe      # membership landing page (theme/subscribe.hbs)
   /portfolio/:
+    data: page.portfolio
     template: portfolio-index
   /portfolio/ironveil/:
     data: page.portfolio-ironveil

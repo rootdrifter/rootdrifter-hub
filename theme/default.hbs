@@ -7,8 +7,10 @@
 
   {{!-- The theme owns the <title> element — {{ghost_head}} injects meta/OG/canonical but NOT
         the title. {{meta_title}} resolves to the page/post meta title, falling back to the
-        site title. --}}
-  <title>{{meta_title}}</title>
+        site title; the home route's bare "rootdrifter" is enriched with the role tagline
+        (matching its og:title). The /blog/ collection front page exposes no theme-detectable
+        context (empty body_class), so its title stays Ghost's default — operator item. --}}
+  <title>{{#is "home"}}rootdrifter — security-cleared practitioner{{else}}{{meta_title}}{{/is}}</title>
 
   {{!-- No-flash theme: apply the saved light preference before first paint (dark default). --}}
   <script>(function(){try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light');}catch(e){}})();</script>

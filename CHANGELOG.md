@@ -2,6 +2,33 @@
 
 All notable changes to the `rootdrifter` theme and the rootdrifter.io platform.
 
+## v1.1.1 — 2026-06-14 — nav consistency, portfolio SEO, polish
+
+### Navigation & voice
+- Renamed the **Blog** nav item to **TRANSMISSION LOG** (top nav + footer), matching the site's
+  "transmission" voice; the `/blog/` route is unchanged. Updated the remaining visible "Blog"
+  strings to match (hero CTA, 404 page, project-page footer link, empty-state labels).
+- Raised the nav's mobile-collapse breakpoint to 900px so the longer label can never overflow the
+  fixed-height nav bar on small-laptop widths.
+
+### Portfolio index SEO
+- `/portfolio/` is a template route with no backing page, so it carried no social/SEO metadata.
+  Added a bound Ghost page (`data: page.portfolio` in `routes.yaml`) holding title/description/OG/
+  Twitter + the branded social card, so shared links render a proper card and `/portfolio/` enters
+  the sitemap.
+
+### Fixes
+- Removed a stray "← Blog" back-link hardcoded at the bottom of the portfolio index template.
+
+## v1.1.0 — 2026-06-13 — platform expansion
+
+- Civilian on-ramp (`/start/`) plus a homepage civilian lede and manifesto strip.
+- `/support/` (transparent running costs) and `/challenges/` (CTF index) pages, with matching
+  nav and footer entries.
+- CTF Challenge 0 (a view-source flag on the homepage).
+- JSON-LD `author.url` fix — re-enabled the `author` taxonomy so the author entity validates
+  instead of resolving to `/404/`.
+
 ## v1.0.0 — 2026-06-12 — production launch
 
 First production release. rootdrifter.io is live on Ghost 6.44.1 behind Cloudflare, serving
