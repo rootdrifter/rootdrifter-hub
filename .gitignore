@@ -29,3 +29,20 @@ logs/
 # Build artifacts
 dist/
 build/
+
+# src/ — private source material & tooling (the social pipeline lives here:
+# library, dispatcher, queue, history, config, strategy). This repo is PUBLIC and
+# live-deployed; NONE of src/ may ever be pushed. Fail-closed (CONSTITUTION.md):
+# blanket-ignore the whole tree, re-include only the .gitkeep anchor.
+# NB: use `src/*` not `src/` so the negation can re-include the anchor.
+src/*
+!src/.gitkeep
+
+# pub/ — publicly-accessible content (Ghost theme/content/deploy/tools). Pushed by
+# design; no ignore rule. See pub/README.md.
+
+# LOCAL-ONLY social strategy — covert discovery-surface funnel. Defense-in-depth:
+# these are already covered by the src/* rule above, but keep explicit paths so the
+# intent survives any future un-ignoring of src/. NEVER force-add, NEVER push.
+src/social/0xdead-reckoning-strategy.md
+src/social/**/*.local.md
