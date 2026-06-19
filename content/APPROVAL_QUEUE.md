@@ -24,11 +24,18 @@ and the `// TRANSMISSION INCOMING` overlay with a subscribe form.
 
 ## Queue Status
 
+> **2026-06-19 (TS06) correction:** the three published posts below were found **already de-teased**
+> (the `teaser` tag had been removed) and serving full content live — verified by fetching the live
+> HTML (zero teaser markers, full `post-content`). Status updated from the stale "PENDING REVIEW" to
+> reflect verified ground truth. Note: the de-tease gate on this theme is the Ghost **`teaser` tag**
+> (`{{#has tag="teaser"}}` in `theme/post.hbs`), **not** member `visibility` — all posts are
+> `visibility:public`; removing the tag is what publishes full content.
+
 | Post | Status | Reviewed | Notes |
 |------|--------|----------|-------|
-| Enumeration Methodology Framework | PENDING REVIEW | - | Published, teaser-gated |
-| Sec+ Domain 2: Threats | PENDING REVIEW | - | Published, teaser-gated |
-| nmap: Beyond the Basics | PENDING REVIEW | - | Published, teaser-gated |
+| Enumeration Methodology Framework | APPROVED — LIVE | 2026-06-19 (TS06 verify) | De-teased; full content public at `/blog/methodology-enumeration-framework/` (1795 words, no teaser overlay) |
+| Sec+ Domain 2: Threats | APPROVED — LIVE | 2026-06-19 (TS06 verify) | De-teased; full content public at `/blog/sec-plus-domain-2-threats/` |
+| nmap: Beyond the Basics | APPROVED — LIVE | 2026-06-19 (TS06 verify) | De-teased; full content public at `/blog/tool-spotlight-nmap/` |
 | SIEM Alert Fatigue: Why Tuning Matters More Than Rules | DRAFT — READY FOR REVIEW | - | Practitioner post (D4 + Wazuh lab); no operational values |
 | Verified Boot and Secure Elements: What GrapheneOS Gets Right | DRAFT — READY FOR REVIEW | - | nullbyte-grounded; verification workflow explained, hash value NOT included |
 | WireGuard vs OpenVPN: A Practical Comparison | DRAFT — READY FOR REVIEW | - | ironveil-grounded; no endpoints/IPs/tunnel names |
@@ -44,9 +51,9 @@ and the `// TRANSMISSION INCOMING` overlay with a subscribe form.
 | Sec+ Domain 4: Security Operations (study notes) | DRAFT | - | Blog-toned SOC overview; publish when reviewed |
 | Sec+ Domain 1: General Security Concepts (study notes) | DRAFT | - | Blog-toned foundations overview; publish when reviewed |
 
-Count rule: "transmissions in preparation" on the homepage = published teaser posts + real
-machine-writeup / study-note / practitioner drafts. Currently **15 live in Ghost** (3 published + 12
-drafts: 5 THM + 2 HTB + 2 Sec+ + 3 practitioner). **+2 practitioner bodies are version-controlled but
+Count rule: "transmissions in preparation" on the homepage = real machine-writeup / study-note /
+practitioner drafts still in prep. Currently **15 live in Ghost** (3 published — now de-teased/live —
+plus 12 drafts: 5 THM + 2 HTB + 2 Sec+ + 3 practitioner). **+2 practitioner bodies are version-controlled but
 NOT yet created in Ghost** (causal-detection-engineering, ctf-practice-real-skills) — blocked by the
 Admin-API auth issue; create them once the integration is fixed, which will take the count to 17.
 
