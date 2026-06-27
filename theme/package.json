@@ -36,11 +36,11 @@
       },
       "hero_tagline_1": {
         "type": "text",
-        "default": "Security-cleared. Deployable from day one."
+        "default": "Security-cleared. UK government clearance held."
       },
       "hero_tagline_2": {
         "type": "text",
-        "default": "Cleared professional. No vetting delay."
+        "default": "Cleared professional. UK government clearance held."
       },
       "hero_tagline_3": {
         "type": "text",

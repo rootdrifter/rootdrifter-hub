@@ -190,5 +190,5 @@ to close the evil-maid gap.
 
 > **// Why this matters** — IRONVEIL is the operational evidence behind a security-cleared
 > candidate: a workstation built with the key-custody, least-trust, and defence-in-depth
-> discipline expected in cleared environments. The clearance is held now, not pending vetting —
-> deployable to cleared work from day one.
+> discipline expected in cleared environments. This is current UK government clearance obtained
+> through employment in a high-security environment.

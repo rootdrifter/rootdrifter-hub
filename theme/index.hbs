@@ -34,10 +34,10 @@
     <div class="sys-label">// rootdrifter — security practitioner</div>
     <h1>Root<span class="slash">//</span>Drifter</h1>
     <div class="hero-sub">Hardened systems · offensive methodology · detection engineering</div>
-    <p class="typed-line" aria-label="Security-cleared and deployable from day one, with no vetting delay.">
+    <p class="typed-line" aria-label="Security-cleared — current UK government clearance obtained through employment in a high-security environment.">
       <span id="typed" data-p1="{{@custom.hero_tagline_1}}" data-p2="{{@custom.hero_tagline_2}}" data-p3="{{@custom.hero_tagline_3}}"></span><span class="cursor" aria-hidden="true">&#9608;</span>
     </p>
-    <noscript><p class="typed-line">Security-cleared. Deployable from day one — no vetting delay.</p></noscript>
+    <noscript><p class="typed-line">Security-cleared — current UK government clearance obtained through employment in a high-security environment.</p></noscript>
     <div class="status-row">
       <span class="status-tag st-cleared">&#9679; Cleared</span>
       <span class="status-tag st-active">&#9679; Active</span>
@@ -61,9 +61,8 @@
   {{!-- ABOUT --}}
   <div class="section-break"><h2>About</h2></div>
   <p>rootdrifter is the working handle of a security-cleared professional building toward cleared
-  entry-level roles in the UK, Netherlands, and Germany. The clearance is held now — not pending a
-  conditional offer — which is stated here as a plain fact rather than a pitch: it means deployment to
-  cleared work without the months-long vetting wait most graduates carry.</p>
+  entry-level roles in the UK, Netherlands, and Germany. This is current UK government clearance
+  obtained through employment in a high-security environment.</p>
   <p>The approach is to build and to break with the same discipline, and to document both to a standard
   a reviewer can audit. That has produced a hardened Linux workstation and a compartmentalised mobile
   platform, a grey-box penetration test mapped to recognised benchmarks, and dissertation-level research
@@ -148,8 +147,8 @@
   if (!el) return;
   /* taglines are theme custom settings (Ghost admin → Design), surfaced via data attributes */
   var PHRASES = [
-    el.getAttribute('data-p1') || 'Security-cleared. Deployable from day one.',
-    el.getAttribute('data-p2') || 'Cleared professional. No vetting delay.',
+    el.getAttribute('data-p1') || 'Security-cleared. UK government clearance held.',
+    el.getAttribute('data-p2') || 'Cleared professional. UK government clearance held.',
     el.getAttribute('data-p3') || 'Building toward cleared security roles.'
   ];
   if (reduce) { el.textContent = PHRASES[0]; return; }
