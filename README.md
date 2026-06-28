@@ -13,7 +13,7 @@ It does **not** contain the Ghost runtime, database, config, or any operational 
 | Property | rootdrifter.github.io | rootdrifter.io |
 |----------|-----------------------|----------------|
 | What | Static portfolio hub (project pages, clearance, skills) | Blog — CTF writeups, methodology |
-| Host | GitHub Pages | Ghost (self-hosted — VPS, pending) |
+| Host | GitHub Pages (now a redirect layer → rootdrifter.io) | Ghost (self-hosted — Hetzner VPS, **LIVE**) |
 | Source | `rootdrifter.github.io` repo | this repo (`rootdrifter-hub`) |
 | Design | canonical tokens + Share Tech Mono / Barlow | **the same tokens, same components** |
 
@@ -140,15 +140,27 @@ deploy/
 Nginx + `certbot` → `deploy-theme.sh` → `configure-resend.sh` → `DNS_SETUP.md` cutover → `health-check.sh`.
 The human checklist is the section below.
 
-## Manual actions required before going live
+## Production status — LIVE
 
-1. **Ghost admin setup** — visit `http://localhost:2368/ghost` and create the admin account.
-2. **Activate the `rootdrifter` theme** in Ghost Admin → Settings → Design.
-3. **Create the `rootdrifter-hub` repo on GitHub** and push (`rootdrifter/rootdrifter-hub`).
-4. **Provision a Hetzner CX22 VPS** (or equivalent) and install Ghost in production mode.
-5. **Configure DNS** — point the `rootdrifter.io` A record at the VPS IP once it is live.
-6. **Set up Resend** for Ghost's transactional + member email sends (`configure-resend.sh`). _Done 2026-06-12._
-7. **Configure `hello@rootdrifter.io` routing** (e.g. via Cloudflare Email Routing) to a real inbox.
+`rootdrifter.io` is live and serving from a self-hosted Ghost instance (Ghost 6.44, Node 20 LTS) on the
+Hetzner bastion VPS, behind Cloudflare + nginx (TLS, security headers, CSP, `/ghost/` protected). All
+primary routes return 200: `/`, `/portfolio/` + the six `/portfolio/<project>/` pages, `/blog/`, `/about/`,
+`/contact/`, `/start/`, `/challenges/`, `/support/`. Transactional + member email is live on Resend SMTP.
+The GitHub-Pages portfolio (`rootdrifter.github.io`) is now a **redirect layer** into `rootdrifter.io` —
+link the Ghost site, not the old Pages URLs.
 
-> Until all seven are done, `rootdrifter.io` does not resolve and must **not** be linked from the
-> public static portfolio (a dead link degrades the live site). See session notes.
+### Go-live history (done)
+1. ✅ Ghost admin account created; `rootdrifter` theme activated.
+2. ✅ `rootdrifter/rootdrifter-hub` repo created and pushed.
+3. ✅ Hetzner VPS provisioned; Ghost installed in production mode.
+4. ✅ DNS cut over — `rootdrifter.io` resolves to the VPS behind Cloudflare.
+5. ✅ Resend wired for transactional + member email (`secure: false` boolean gotcha documented).
+6. ✅ `hello@rootdrifter.io` routing live.
+
+### Operating notes (current)
+- **Theme changes** ship via `deploy/scripts/deploy-theme.sh` (gscan → copy theme + routes → `ghost restart`
+  → health-check). Target: gscan 0 errors.
+- **Content** is authored in Ghost admin; draft bodies are mirrored in `content/posts/` and gated by the
+  Ghost `teaser` **tag** until reviewed (see `content/APPROVAL_QUEUE.md`). All posts are `visibility:public`.
+- **Known open items** (operator): see `deploy/DEPLOYMENT_LOG.md` — the Hetzner egress-block issue and the
+  admin-2FA / API-key-rotation follow-ups.
