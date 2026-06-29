@@ -90,8 +90,8 @@ listener.
 
 ### WireGuard VPN — wg-CH-FI-2 and wg-SE-FI-1
 
-Two NetworkManager tunnels: **`wg-CH-FI-2`** (endpoint `79.135.104.69:51820`) and
-**`wg-SE-FI-1`** (`185.159.156.27:51820`), each with full-tunnel `AllowedIPs` (`0.0.0.0/0, ::/0`),
+Two NetworkManager tunnels: **`wg-CH-FI-2`** (endpoint `[REDACTED]:51820`) and
+**`wg-SE-FI-1`** (`[REDACTED]:51820`), each with full-tunnel `AllowedIPs` (`0.0.0.0/0, ::/0`),
 interface address `10.2.0.2/32`, and a 25-second keepalive. Activation is **manual**
 (`autoconnect=false`). The named-tunnel model encodes the endpoint region for multi-tunnel
 readability. **Kill-switch — honest description:** the protection is *route-based*, not a separate
